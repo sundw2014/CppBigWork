@@ -1,0 +1,678 @@
+Archive member included because of file (symbol)
+
+/usr/lib64/libc_nonshared.a(elf-init.oS)
+                              /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o (__libc_csu_init)
+
+Discarded input sections
+
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ./src/server.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ./src/protocol.o
+ .group         0x0000000000000000        0xc ./src/client.o
+ .group         0x0000000000000000        0xc ./src/client.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ./src/client.o
+ .group         0x0000000000000000        0x8 ./src/process.o
+ .group         0x0000000000000000        0x8 ./src/process.o
+ .group         0x0000000000000000        0x8 ./src/process.o
+ .group         0x0000000000000000        0x8 ./src/process.o
+ .group         0x0000000000000000        0x8 ./src/process.o
+ .group         0x0000000000000000        0x8 ./src/process.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ./src/process.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ./src/room.o
+ .group         0x0000000000000000        0x8 ./src/hall.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ./src/hall.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+内存配置
+
+名称           来源             长度             属性
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+LOAD ./src/server.o
+LOAD ./src/protocol.o
+LOAD ./src/client.o
+LOAD ./src/process.o
+LOAD ./src/room.o
+LOAD ./src/hall.o
+LOAD /usr/lib64/libpthread.so
+START GROUP
+LOAD /lib64/libpthread.so.0
+LOAD /usr/lib64/libpthread_nonshared.a
+END GROUP
+LOAD /usr/lib64/libmysqlclient.so
+LOAD /usr/lib64/libpthread.so
+START GROUP
+LOAD /lib64/libpthread.so.0
+LOAD /usr/lib64/libpthread_nonshared.a
+END GROUP
+LOAD /usr/lib64/libz.so
+LOAD /usr/lib64/libssl.so
+LOAD /usr/lib64/libcrypto.so
+LOAD /usr/lib64/libdl.so
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/libstdc++.so
+LOAD /usr/lib64/libm.so
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/libgcc_s.so
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/libgcc.a
+LOAD /usr/lib64/libc.so
+START GROUP
+LOAD /lib64/libc.so.6
+LOAD /usr/lib64/libc_nonshared.a
+LOAD /lib64/ld-linux-x86-64.so.2
+END GROUP
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/libgcc_s.so
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/libgcc.a
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+                0x0000000000400000                PROVIDE (__executable_start, 0x400000)
+                0x0000000000400238                . = (0x400000 + SIZEOF_HEADERS)
+
+.interp         0x0000000000400238       0x1c
+ *(.interp)
+ .interp        0x0000000000400238       0x1c /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.note.ABI-tag   0x0000000000400254       0x20
+ .note.ABI-tag  0x0000000000400254       0x20 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.note.gnu.build-id
+                0x0000000000400274       0x24
+ *(.note.gnu.build-id)
+ .note.gnu.build-id
+                0x0000000000400274       0x24 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.hash           0x0000000000400298      0x238
+ *(.hash)
+ .hash          0x0000000000400298      0x238 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.gnu.hash       0x00000000004004d0       0x4c
+ *(.gnu.hash)
+ .gnu.hash      0x00000000004004d0       0x4c /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.dynsym         0x0000000000400520      0x6d8
+ *(.dynsym)
+ .dynsym        0x0000000000400520      0x6d8 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.dynstr         0x0000000000400bf8      0x495
+ *(.dynstr)
+ .dynstr        0x0000000000400bf8      0x495 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.gnu.version    0x000000000040108e       0x92
+ *(.gnu.version)
+ .gnu.version   0x000000000040108e       0x92 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.gnu.version_d  0x0000000000401120        0x0
+ *(.gnu.version_d)
+ .gnu.version_d
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.gnu.version_r  0x0000000000401120       0xc0
+ *(.gnu.version_r)
+ .gnu.version_r
+                0x0000000000401120       0xc0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.rela.dyn       0x00000000004011e0       0x18
+ *(.rela.init)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ .rela.text     0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZN6cFrameC2Ev
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZN6cFrameD2Ev
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZNSt11char_traitsIcE7compareEPKcS2_m
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZSteqIcEN9__gnu_cxx11__enable_ifIXsrSt9__is_charIT_E7__valueEbE6__typeERKSbIS3_St11char_traitsIS3_ESaIS3_EESC_
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .rela.text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_S8_
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ *(.rela.fini)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ .rela.rodata   0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rela.ctors)
+ *(.rela.dtors)
+ *(.rela.got)
+ .rela.got      0x00000000004011e0       0x18 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+ .rela.bss      0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ *(.rela.ldata .rela.ldata.* .rela.gnu.linkonce.l.*)
+ *(.rela.lbss .rela.lbss.* .rela.gnu.linkonce.lb.*)
+ *(.rela.lrodata .rela.lrodata.* .rela.gnu.linkonce.lr.*)
+ *(.rela.ifunc)
+ .rela.eh_frame
+                0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.rela.plt       0x00000000004011f8      0x5d0
+ *(.rela.plt)
+ .rela.plt      0x00000000004011f8      0x5d0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x00000000004017c8                PROVIDE (__rela_iplt_start, .)
+ *(.rela.iplt)
+ .rela.iplt     0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x00000000004017c8                PROVIDE (__rela_iplt_end, .)
+
+.init           0x00000000004017c8       0x1a
+ *(SORT(.init))
+ .init          0x00000000004017c8       0x15 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+                0x00000000004017c8                _init
+ .init          0x00000000004017dd        0x5 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.plt            0x00000000004017f0      0x3f0
+ *(.plt)
+ .plt           0x00000000004017f0      0x3f0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000401800                operator new[](unsigned long)@@GLIBCXX_3.4
+                0x0000000000401810                __errno_location@@GLIBC_2.2.5
+                0x0000000000401820                printf@@GLIBC_2.2.5
+                0x0000000000401830                htons@@GLIBC_2.2.5
+                0x0000000000401840                bind@@GLIBC_2.2.5
+                0x0000000000401850                mysql_real_connect@@libmysqlclient_18
+                0x0000000000401860                std::string::append(char const*, unsigned long)@@GLIBCXX_3.4
+                0x0000000000401870                socket@@GLIBC_2.2.5
+                0x0000000000401880                accept@@GLIBC_2.2.5
+                0x0000000000401890                strerror@@GLIBC_2.2.5
+                0x00000000004018a0                write@@GLIBC_2.2.5
+                0x00000000004018b0                inet_ntoa@@GLIBC_2.2.5
+                0x00000000004018c0                memcmp@@GLIBC_2.2.5
+                0x00000000004018d0                std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, unsigned long, std::allocator<char> const&)@@GLIBCXX_3.4
+                0x00000000004018e0                memset@@GLIBC_2.2.5
+                0x00000000004018f0                std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::string const&)@@GLIBCXX_3.4
+                0x0000000000401900                pthread_create@@GLIBC_2.2.5
+                0x0000000000401910                fcntl@@GLIBC_2.2.5
+                0x0000000000401920                sleep@@GLIBC_2.2.5
+                0x0000000000401930                htonl@@GLIBC_2.2.5
+                0x0000000000401940                std::string::reserve(unsigned long)@@GLIBCXX_3.4
+                0x0000000000401950                memcpy@@GLIBC_2.14
+                0x0000000000401960                std::string::operator=(std::string const&)@@GLIBCXX_3.4
+                0x0000000000401970                __cxa_atexit@@GLIBC_2.2.5
+                0x0000000000401980                pthread_self@@GLIBC_2.2.5
+                0x0000000000401990                mysql_store_result@@libmysqlclient_18
+                0x00000000004019a0                std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string()@@GLIBCXX_3.4
+                0x00000000004019b0                operator delete(void*)@@GLIBCXX_3.4
+                0x00000000004019c0                operator new(unsigned long)@@GLIBCXX_3.4
+                0x00000000004019d0                pthread_detach@@GLIBC_2.2.5
+                0x00000000004019e0                std::allocator<char>::~allocator()@@GLIBCXX_3.4
+                0x00000000004019f0                std::string::append(std::string const&)@@GLIBCXX_3.4
+                0x0000000000401a00                listen@@GLIBC_2.2.5
+                0x0000000000401a10                std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&)@@GLIBCXX_3.4
+                0x0000000000401a20                std::string::data() const@@GLIBCXX_3.4
+                0x0000000000401a30                signal@@GLIBC_2.2.5
+                0x0000000000401a40                exit@@GLIBC_2.2.5
+                0x0000000000401a50                malloc@@GLIBC_2.2.5
+                0x0000000000401a60                mysql_real_query@@libmysqlclient_18
+                0x0000000000401a70                std::string::c_str() const@@GLIBCXX_3.4
+                0x0000000000401a80                read@@GLIBC_2.2.5
+                0x0000000000401a90                mysql_error@@libmysqlclient_18
+                0x0000000000401aa0                mysql_fetch_lengths@@libmysqlclient_18
+                0x0000000000401ab0                std::ios_base::Init::Init()@@GLIBCXX_3.4
+                0x0000000000401ac0                puts@@GLIBC_2.2.5
+                0x0000000000401ad0                atoi@@GLIBC_2.2.5
+                0x0000000000401ae0                std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string()@@GLIBCXX_3.4
+                0x0000000000401af0                std::string::size() const@@GLIBCXX_3.4
+                0x0000000000401b00                realloc@@GLIBC_2.2.5
+                0x0000000000401b10                __gxx_personality_v0@@CXXABI_1.3
+                0x0000000000401b20                __pthread_key_create@@GLIBC_2.2.5
+                0x0000000000401b30                _Unwind_Resume@@GCC_3.0
+                0x0000000000401b40                std::allocator<char>::allocator()@@GLIBCXX_3.4
+                0x0000000000401b50                std::string::append(char const*)@@GLIBCXX_3.4
+                0x0000000000401b60                mysql_init@@libmysqlclient_18
+                0x0000000000401b70                __libc_start_main@@GLIBC_2.2.5
+                0x0000000000401b90                mysql_fetch_row@@libmysqlclient_18
+                0x0000000000401ba0                std::string::length() const@@GLIBCXX_3.4
+                0x0000000000401bb0                close@@GLIBC_2.2.5
+                0x0000000000401bc0                mysql_num_fields@@libmysqlclient_18
+                0x0000000000401bd0                std::ios_base::Init::~Init()@@GLIBCXX_3.4
+ *(.iplt)
+ .iplt          0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.text           0x0000000000401be0     0x1d72
+ *(.text.unlikely .text.*_unlikely .text.unlikely.*)
+ *(.text.exit .text.exit.*)
+ *(.text.startup .text.startup.*)
+ *(.text.hot .text.hot.*)
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x0000000000401be0       0x2a /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000401be0                _start
+ .text          0x0000000000401c0a        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ *fill*         0x0000000000401c0a        0x6 
+ .text          0x0000000000401c10       0xbd /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ .text          0x0000000000401ccd      0x2bf ./src/server.o
+                0x0000000000401ce2                main
+ .text          0x0000000000401f8c      0x33e ./src/protocol.o
+                0x0000000000401f8c                Protocol::sendFrameReal()
+                0x0000000000401fba                Protocol::Protocol(int)
+                0x0000000000401fba                Protocol::Protocol(int)
+                0x00000000004020bc                Protocol::receiveFrame()
+                0x0000000000402150                Protocol::sendFrame(unsigned char*, char*, char*, char*, char*)
+                0x000000000040229c                Protocol::available()
+                0x00000000004022a6                Protocol::isFrameValid(Frame&)
+ .text          0x00000000004022ca      0x402 ./src/client.o
+                0x00000000004022ca                Client::Client(int, sockaddr_in&, unsigned int&)
+                0x00000000004022ca                Client::Client(int, sockaddr_in&, unsigned int&)
+                0x000000000040234e                Client::~Client()
+                0x000000000040234e                Client::~Client()
+                0x00000000004023a4                Client::updateFrame()
+                0x000000000040241a                Client::parseFrame()
+                0x0000000000402680                Client::sendFrame(unsigned char*, char*, char*, char*, char*)
+ .text._ZN6cFrameC2Ev
+                0x00000000004026cc       0x96 ./src/client.o
+                0x00000000004026cc                cFrame::cFrame()
+                0x00000000004026cc                cFrame::cFrame()
+ .text._ZN6cFrameD2Ev
+                0x0000000000402762       0x96 ./src/client.o
+                0x0000000000402762                cFrame::~cFrame()
+                0x0000000000402762                cFrame::~cFrame()
+ .text          0x00000000004027f8      0xb25 ./src/process.o
+                0x0000000000402d65                ClientProcess(void*)
+ .text._ZNSt11char_traitsIcE7compareEPKcS2_m
+                0x000000000040331d       0x2d ./src/process.o
+                0x000000000040331d                std::char_traits<char>::compare(char const*, char const*, unsigned long)
+ .text._ZNSt11char_traitsIcE6lengthEPKc
+                0x000000000040334a       0x2c ./src/process.o
+                0x000000000040334a                std::char_traits<char>::length(char const*)
+ .text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_
+                0x0000000000403376       0xa4 ./src/process.o
+                0x0000000000403376                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ .text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_
+                0x000000000040341a       0x62 ./src/process.o
+                0x000000000040341a                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)
+ .text._ZSteqIcEN9__gnu_cxx11__enable_ifIXsrSt9__is_charIT_E7__valueEbE6__typeERKSbIS3_St11char_traitsIS3_ESaIS3_EESC_
+                0x000000000040347c       0x84 ./src/process.o
+                0x000000000040347c                __gnu_cxx::__enable_if<std::__is_char<char>::__value, bool>::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ .text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_S8_
+                0x0000000000403500       0x62 ./src/process.o
+                0x0000000000403500                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ .text          0x0000000000403562      0x127 ./src/room.o
+                0x0000000000403562                Room::Room()
+                0x0000000000403562                Room::Room()
+                0x0000000000403596                Room::~Room()
+                0x0000000000403596                Room::~Room()
+                0x00000000004035fc                Room::addClient(Client&)
+                0x000000000040365a                Room::isFull()
+ *fill*         0x0000000000403689        0x1 
+ .text          0x000000000040368a      0x23f ./src/hall.o
+                0x000000000040368a                Hall::Hall()
+                0x000000000040368a                Hall::Hall()
+                0x00000000004036c2                Hall::~Hall()
+                0x00000000004036c2                Hall::~Hall()
+                0x000000000040372c                Hall::createNewRoom(unsigned int)
+                0x00000000004037b4                Hall::joinRoom(unsigned int, Client&)
+                0x0000000000403852                Hall::GetHallInfo()
+ *fill*         0x00000000004038c9        0x1 
+ .text._ZN4Room15GetNumOfClientsEv
+                0x00000000004038ca       0x12 ./src/hall.o
+                0x00000000004038ca                Room::GetNumOfClients()
+ *fill*         0x00000000004038dc        0x4 
+ .text          0x00000000004038e0       0x72 /usr/lib64/libc_nonshared.a(elf-init.oS)
+                0x00000000004038e0                __libc_csu_init
+                0x0000000000403950                __libc_csu_fini
+ .text          0x0000000000403952        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+ .text          0x0000000000403952        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+ *(.gnu.warning)
+
+.fini           0x0000000000403954        0x9
+ *(SORT(.fini))
+ .fini          0x0000000000403954        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+                0x0000000000403954                _fini
+ .fini          0x0000000000403958        0x5 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+                0x000000000040395d                PROVIDE (__etext, .)
+                0x000000000040395d                PROVIDE (_etext, .)
+                0x000000000040395d                PROVIDE (etext, .)
+
+.rodata         0x0000000000403960      0x1e8
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.cst4   0x0000000000403960        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000403960                _IO_stdin_used
+ *fill*         0x0000000000403964        0x4 
+ .rodata        0x0000000000403968       0xee ./src/server.o
+ *fill*         0x0000000000403a56        0x2 
+ .rodata        0x0000000000403a58        0x8 ./src/client.o
+ .rodata        0x0000000000403a60       0xe8 ./src/process.o
+
+.rodata1
+ *(.rodata1)
+
+.eh_frame_hdr   0x0000000000403b48      0x15c
+ *(.eh_frame_hdr)
+ .eh_frame_hdr  0x0000000000403b48      0x15c /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.eh_frame       0x0000000000403ca8      0x634
+ *(.eh_frame)
+ .eh_frame      0x0000000000403ca8       0x30 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .eh_frame      0x0000000000403cd8       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .eh_frame      0x0000000000403d18       0x80 ./src/server.o
+                                         0x90 (size before relaxing)
+ .eh_frame      0x0000000000403d98       0xc8 ./src/protocol.o
+                                         0xe0 (size before relaxing)
+ .eh_frame      0x0000000000403e60      0x120 ./src/client.o
+                                        0x138 (size before relaxing)
+ .eh_frame      0x0000000000403f80      0x1a0 ./src/process.o
+                                        0x1d0 (size before relaxing)
+ .eh_frame      0x0000000000404120       0x88 ./src/room.o
+                                         0xa0 (size before relaxing)
+ .eh_frame      0x00000000004041a8       0xd0 ./src/hall.o
+                                        0x108 (size before relaxing)
+ .eh_frame      0x0000000000404278       0x60 /usr/lib64/libc_nonshared.a(elf-init.oS)
+                                         0x78 (size before relaxing)
+ .eh_frame      0x00000000004042d8        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+
+.gcc_except_table
+                0x00000000004042dc      0x1e0
+ *(.gcc_except_table .gcc_except_table.*)
+ .gcc_except_table._ZN6cFrameC2Ev
+                0x00000000004042dc       0x19 ./src/client.o
+ .gcc_except_table._ZN6cFrameD2Ev
+                0x00000000004042f5       0x19 ./src/client.o
+ .gcc_except_table
+                0x000000000040430e       0x6d ./src/client.o
+ .gcc_except_table
+                0x000000000040437b      0x131 ./src/process.o
+ .gcc_except_table
+                0x00000000004044ac       0x10 ./src/hall.o
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+                0x00000000004044bc                . = (ALIGN (0x200000) - ((0x200000 - .) & 0x1fffff))
+                0x0000000000604d5c                . = DATA_SEGMENT_ALIGN (0x200000, 0x1000)
+
+.eh_frame
+ *(.eh_frame)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+
+.tdata
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x0000000000604d5c        0x0
+                0x0000000000604d5c                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array)
+                0x0000000000604d5c                PROVIDE (__preinit_array_end, .)
+
+.init_array     0x0000000000604d60       0x18
+                0x0000000000604d60                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*) SORT(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+ .init_array    0x0000000000604d60        0x8 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ .init_array    0x0000000000604d68        0x8 ./src/server.o
+ .init_array    0x0000000000604d70        0x8 ./src/process.o
+                0x0000000000604d78                PROVIDE (__init_array_end, .)
+
+.fini_array     0x0000000000604d78        0x8
+                0x0000000000604d78                PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*) SORT(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+ .fini_array    0x0000000000604d78        0x8 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+                0x0000000000604d80                PROVIDE (__fini_array_end, .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+
+.jcr            0x0000000000604d80        0x8
+ *(.jcr)
+ .jcr           0x0000000000604d80        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ .jcr           0x0000000000604d80        0x8 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+
+.data.rel.ro
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+
+.dynamic        0x0000000000604d88      0x270
+ *(.dynamic)
+ .dynamic       0x0000000000604d88      0x270 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000604d88                _DYNAMIC
+
+.got            0x0000000000604ff8        0x8
+ *(.got)
+ .got           0x0000000000604ff8        0x8 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ *(.igot)
+                0x0000000000605fe8                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0x18)?0x18:0x0)
+
+.got.plt        0x0000000000605000      0x208
+ *(.got.plt)
+ .got.plt       0x0000000000605000      0x208 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000605000                _GLOBAL_OFFSET_TABLE_
+ *(.igot.plt)
+ .igot.plt      0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+
+.data           0x0000000000605208       0x10
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x0000000000605208        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000605208                data_start
+                0x0000000000605208                __data_start
+ .data          0x000000000060520c        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ *fill*         0x000000000060520c        0x4 
+ .data          0x0000000000605210        0x8 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+                0x0000000000605210                __dso_handle
+ .data          0x0000000000605218        0x0 ./src/server.o
+ .data          0x0000000000605218        0x0 ./src/protocol.o
+ .data          0x0000000000605218        0x0 ./src/client.o
+ .data          0x0000000000605218        0x0 ./src/process.o
+ .data          0x0000000000605218        0x0 ./src/room.o
+ .data          0x0000000000605218        0x0 ./src/hall.o
+ .data          0x0000000000605218        0x0 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .data          0x0000000000605218        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+ .data          0x0000000000605218        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.tm_clone_table
+                0x0000000000605218        0x0
+ .tm_clone_table
+                0x0000000000605218        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ .tm_clone_table
+                0x0000000000605218        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+
+.data1
+ *(.data1)
+                0x0000000000605218                _edata = .
+                0x0000000000605218                PROVIDE (edata, .)
+                0x0000000000605218                . = .
+                0x0000000000605218                __bss_start = .
+
+.bss            0x0000000000605218       0x18
+ *(.dynbss)
+ .dynbss        0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x0000000000605218        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .bss           0x0000000000605218        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .bss           0x0000000000605218        0x1 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ *fill*         0x0000000000605219        0x7 
+ .bss           0x0000000000605220        0x9 ./src/server.o
+                0x0000000000605220                hall
+ .bss           0x0000000000605229        0x0 ./src/protocol.o
+ .bss           0x0000000000605229        0x0 ./src/client.o
+ .bss           0x0000000000605229        0x1 ./src/process.o
+ .bss           0x000000000060522a        0x0 ./src/room.o
+ .bss           0x000000000060522a        0x0 ./src/hall.o
+ .bss           0x000000000060522a        0x0 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .bss           0x000000000060522a        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+ .bss           0x000000000060522a        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+ *(COMMON)
+                0x0000000000605230                . = ALIGN ((. != 0x0)?0x8:0x1)
+ *fill*         0x000000000060522a        0x6 
+
+.lbss
+ *(.dynlbss)
+ *(.lbss .lbss.* .gnu.linkonce.lb.*)
+ *(LARGE_COMMON)
+                0x0000000000605230                . = ALIGN (0x8)
+                0x0000000000605230                . = SEGMENT_START ("ldata-segment", .)
+
+.lrodata
+ *(.lrodata .lrodata.* .gnu.linkonce.lr.*)
+
+.ldata          0x0000000000a05230        0x0
+ *(.ldata .ldata.* .gnu.linkonce.l.*)
+                0x0000000000a05230                . = ALIGN ((. != 0x0)?0x8:0x1)
+                0x0000000000a05230                . = ALIGN (0x8)
+                0x0000000000a05230                _end = .
+                0x0000000000a05230                PROVIDE (end, .)
+                0x0000000000a05230                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x42
+ *(.comment)
+ .comment       0x0000000000000000       0x42 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                                         0x43 (size before relaxing)
+ .comment       0x0000000000000000       0x43 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
+ .comment       0x0000000000000000       0x43 ./src/server.o
+ .comment       0x0000000000000000       0x43 ./src/protocol.o
+ .comment       0x0000000000000000       0x43 ./src/client.o
+ .comment       0x0000000000000000       0x43 ./src/process.o
+ .comment       0x0000000000000000       0x43 ./src/room.o
+ .comment       0x0000000000000000       0x43 ./src/hall.o
+ .comment       0x0000000000000000       0x43 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x100
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x50 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .debug_aranges
+                0x0000000000000050       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .debug_aranges
+                0x0000000000000090       0x30 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_aranges
+                0x00000000000000c0       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000      0x31b
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000       0xf3 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .debug_info    0x00000000000000f3       0x68 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .debug_info    0x000000000000015b      0x158 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_info    0x00000000000002b3       0x68 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.debug_abbrev   0x0000000000000000      0x183
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x52 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .debug_abbrev  0x0000000000000052       0x12 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .debug_abbrev  0x0000000000000064      0x10d /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_abbrev  0x0000000000000171       0x12 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.debug_line     0x0000000000000000      0x1e7
+ *(.debug_line .debug_line.* .debug_line_end)
+ .debug_line    0x0000000000000000       0x84 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .debug_line    0x0000000000000084       0x64 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .debug_line    0x00000000000000e8       0x9e /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_line    0x0000000000000186       0x61 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str      0x0000000000000000      0x2ad
+ *(.debug_str)
+ .debug_str     0x0000000000000000      0x163 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                                        0x188 (size before relaxing)
+ .debug_str     0x0000000000000163      0x14a /usr/lib64/libc_nonshared.a(elf-init.oS)
+                                        0x19b (size before relaxing)
+
+.debug_loc      0x0000000000000000      0x11b
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000      0x11b /usr/lib64/libc_nonshared.a(elf-init.oS)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges   0x0000000000000000       0xd0
+ *(.debug_ranges)
+ .debug_ranges  0x0000000000000000       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+ .debug_ranges  0x0000000000000040       0x50 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_ranges  0x0000000000000090       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+
+.debug_macro
+ *(.debug_macro)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+OUTPUT(server elf64-x86-64)
