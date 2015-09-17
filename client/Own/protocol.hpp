@@ -3,8 +3,15 @@
 
 #include <string>
 #include <sys/types.h>
-#include <errno.h>
 #include <sys/stat.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<errno.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
 
 using namespace std;
 
@@ -33,7 +40,7 @@ public:
 	bool receiveFrame();
 
 	//send the frame directly
-  void sendFrame(const unsigned char lengths[],const char *cmd , const char *value1=NULL,const char *value2=NULL,const char *value3=NULL);
+    void sendFrame(const unsigned char lengths[],const char *cmd , const char *value1=NULL,const char *value2=NULL,const char *value3=NULL);
 
 	bool available();
 

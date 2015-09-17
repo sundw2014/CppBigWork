@@ -42,6 +42,11 @@ RoomTableInfo Hall::GetHallInfo()
 
   //遍历整个RoomTable,得到每个房间的人数
   for (unsigned int i=0;i<ROOMMAX;i++)
-      info.num[i]=roomTable[i]->GetNumOfClients();
+  {
+      if(roomTable[i]==NULL)
+        info.num[i]=0;
+      else
+        info.num[i]=roomTable[i]->GetNumOfClients();
+  }
   return info;
 }

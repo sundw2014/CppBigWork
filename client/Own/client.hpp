@@ -20,7 +20,7 @@ private:
 public:
   const Frame *receivedFrame;
   cFrame frame;
-  Client(int fd,struct sockaddr_in &Tclient_addr,unsigned int &Tclient_addr_len);
+  Client(int fd);
   ~Client();
   bool updateFrame();
   bool sendFrame(const unsigned char lengths[],const char *cmd ,const char *value1=NULL,const char *value2=NULL,const char *value3=NULL);

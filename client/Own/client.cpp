@@ -1,16 +1,12 @@
 #include "client.hpp"
 #include "protocol.hpp"
 #include "unistd.h"
-#include "stdio.h"
-
 using namespace std;
 
-Client::Client(int fd,struct sockaddr_in &Tclient_addr,unsigned int &Tclient_addr_len):socketFd(fd),protocol(fd)
+Client::Client(int fd):socketFd(fd),protocol(fd)
 {
   receivedFrame=(const Frame *)&(protocol.receivedFrame);
-  client_addr=Tclient_addr;
-  client_addr_len=Tclient_addr_len;
-};
+}
 
 Client::~Client()
 {
@@ -39,7 +35,6 @@ bool Client::updateFrame()
 
 bool Client::parseFrame()
 {
-  // printf("length = {%d,%d,%d,%d}\r\n",protocol.receivedFrame.length[0],protocol.receivedFrame.length[1],protocol.receivedFrame.length[2],protocol.receivedFrame.length[3]);
   frame.cmd=string(protocol.receivedFrame.cmd,(size_t)protocol.receivedFrame.length[0]);
   frame.value1=string(protocol.receivedFrame.value1,(size_t)protocol.receivedFrame.length[1]);
   frame.value2=string(protocol.receivedFrame.value2,(size_t)protocol.receivedFrame.length[2]);

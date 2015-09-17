@@ -66,24 +66,28 @@ int main(void)
 
 	printf("wait for client's request...\r\n");
 
-	ClientArg shareClientArg;
-
+	ClientArg *shareClientArg = new ClientArg;
+	shareClientArg->fd = -1;
+	struct sockaddr_in client_addr;
+	unsigned int client_addr_len;
   //阻塞，持续等待客户端连接请求，并建立处理线程
   for(;;)
   {
-		if(shareClientArg.fd!=-1)
+		if(shareClientArg->fd!=-1)
 			continue;
-		if((currentfd = accept(listenfd , (struct sockaddr *)&(shareClientArg.client_addr) , &(shareClientArg.client_addr_len))) == -1)
+		//printf("wait for ...\r\n");
+		if((currentfd = accept(listenfd , (struct sockaddr *) &(shareClientArg->client_addr) , &(shareClientArg->client_addr_len))) == -1)
     {
      	printf("accept socket error: %s(error %d)\r\n",strerror(errno),errno);
     }
-		shareClientArg.fd = currentfd;
-		pthread_create(tid + tidCurIndex , NULL , ClientProcess , &shareClientArg);
+		printf("create a connection with client: %s\r\n",inet_ntoa(shareClientArg->client_addr.sin_addr));
+		shareClientArg->fd = currentfd;
+		//printf("currentfd = %d\r\n",currentfd);
+		pthread_create(tid + tidCurIndex , NULL , ClientProcess , shareClientArg);
+		sleep(1);
 		tidCurIndex++;
 		tidCNT++;
 		tid = (pthread_t *)realloc(tid , tidCNT * sizeof (pthread_t));
-
-    printf("create a connection with client: %s\r\n",inet_ntoa(shareClientArg.client_addr.sin_addr));
 	  //fcntl(currentfd , F_SETFL , O_NONBLOCK);
   }
 }

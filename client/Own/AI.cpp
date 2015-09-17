@@ -12,9 +12,10 @@ uint32 hash = ZobrisrtInitValue;
 uint8 realPly = 0;
 //最大搜索深度
 const uint8 maxDepth = 3;
-const uint8 maxThreads = 7;
+const uint8 maxThreads = 12;
 int numProcessors = 1;//cpu核心数
  std::vector<ZobristNode> *volatile hashValues[maxDepth+1];
+pthread_mutex_t hashMymutex[maxDepth+1] = PTHREAD_MUTEX_INITIALIZER;
 //互斥信号量定义成volatile,防缓存
 volatile bool hashValuesLock[maxDepth+1],isThreadEnd[maxThreads],isTidRunning[maxThreads],isTidJoin[maxThreads];
 pthread_t tid[maxThreads];
@@ -69,40 +70,40 @@ uint8 getPosValue(const BitBoard &board,uint8 pos)
 }
 uint8 getValidPos(const BitBoard &table,const uint8 ran)
 {
-    uint8 tempCnt=0;
-    for(uint8 t=0;t<16;t++)
-    {
-      for(uint8 k=0;k<16;k++)
-      {
-          uint8 pos = t*16 + k;
-          if(!(table[pos/8] & (1<<(pos%8))))//可落子，tempCnt加一
-          {
-              tempCnt++;
-              if(tempCnt >= ran)
-                  return pos;
-          }
-      }
-    }
 //    uint8 tempCnt=0;
-//    uint8 dim[2]={8,8};
 //    for(uint8 t=0;t<16;t++)
 //    {
-//      for(uint8 d=0;d<2;d++)
-//        for(uint8 k=0;k<t;k++)
-//        {
-//          if(t%2)
-//            dim[d]++;
-//          else
-//            dim[d]--;
-//          uint8 pos = dim[0]*16 + dim[1];
+//      for(uint8 k=0;k<16;k++)
+//      {
+//          uint8 pos = t*16 + k;
 //          if(!(table[pos/8] & (1<<(pos%8))))//可落子，tempCnt加一
+//          {
 //              tempCnt++;
-//          if(tempCnt >= ran)
-//              return pos;
-//        }
+//              if(tempCnt >= ran)
+//                  return pos;
+//          }
+//      }
 //    }
-//    //找不到合适的值就返回0
-//    return 0;
+    uint8 tempCnt=0;
+    uint8 dim[2]={8,8};
+    for(uint8 t=0;t<16;t++)
+    {
+      for(uint8 d=0;d<2;d++)
+        for(uint8 k=0;k<=t;k++)
+        {
+          uint8 pos = dim[0]*16 + dim[1];
+          if(!(table[pos/8] & (1<<(pos%8))))//可落子，tempCnt加一
+              tempCnt++;
+          if(t%2)
+            dim[d]++;
+          else
+            dim[d]--;
+          if(tempCnt >= ran)
+              return pos;
+        }
+    }
+    //找不到合适的值就返回0
+    return 0;
 }
 
 uint8 MCGetValidPos(const BitBoard &inValidPos,const BitBoard &myBoard,const BitBoard &otherBoard)
@@ -253,18 +254,20 @@ int16 ChessBoard::run(){
        hash = ZobristHash(parentHash,input,2,0);
     if(depth == maxDepth)//已到达最大深度
     {
-        usleep(1);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
+        usleep(10);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
         ZobristNode temp = {hash,0};
         bool isExist = false;
         std::vector<ZobristNode>::iterator k;
         ZobristNode h;
-        while(hashValuesLock[depth]);
-        hashValuesLock[depth] = true;
+//        while(hashValuesLock[depth]);
+//        hashValuesLock[depth] = true;
+        pthread_mutex_lock(&hashMymutex[depth]);
         if((k=std::find(hashValues[depth]->begin(),hashValues[depth]->end(),temp))!=hashValues[depth]->end())
             isExist = true;
         if(isExist)
             h = *k;
-        hashValuesLock[depth] = false;
+        pthread_mutex_unlock(&hashMymutex[depth]);
+//        hashValuesLock[depth] = false;
         if(!isExist){
           //尚未评估过该点，则使用蒙特卡洛方法评估
           h.value = MC();
@@ -273,11 +276,13 @@ int16 ChessBoard::run(){
               return h.value;
           //添加到置换表
           //以下两行对应P操作
-          while(hashValuesLock[depth]);//其他线程正在操作，阻塞
-          hashValuesLock[depth] = true;//对信号量执行-1操作哈
+//          while(hashValuesLock[depth]);//其他线程正在操作，阻塞
+//          hashValuesLock[depth] = true;//对信号量执行-1操作哈
+          pthread_mutex_lock(&hashMymutex[depth]);
           hashValues[depth]->push_back(h);
           //等效的V操作
-          hashValuesLock[depth] = false;
+          pthread_mutex_unlock(&hashMymutex[depth]);
+//          hashValuesLock[depth] = false;
 
           if (h.value > parentValue)
             return (-10001);//返回一个无效收益,父节点会检测到它无效
@@ -292,18 +297,20 @@ int16 ChessBoard::run(){
     }
     else if(depth!=0) //尚未到达最大深度
     {
-        usleep(1);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
+        usleep(10);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
         ZobristNode temp = {hash,0};
         bool isExist = false;
         std::vector<ZobristNode>::iterator k;
         ZobristNode h;
-        while(hashValuesLock[depth]);
-        hashValuesLock[depth] = true;
-        if((k=std::find(hashValues[depth]->begin(),hashValues[depth]->end(),temp))!=hashValues[depth]->end())
-            isExist = false;/////////////////////
+//        while(hashValuesLock[depth]);
+//        hashValuesLock[depth] = true;
+//        pthread_mutex_lock(&hashMymutex[depth]);
+//        if((k=std::find(hashValues[depth]->begin(),hashValues[depth]->end(),temp))!=hashValues[depth]->end())
+//            isExist = true;/////////////////////
         if(isExist)
             h = *k;
-        hashValuesLock[depth] = false;
+//        pthread_mutex_unlock(&hashMymutex[depth]);
+//        hashValuesLock[depth] = false;
         if(!isExist){
         //尚未评估过该点
         BitBoard invalidPos;//用于确定那些点可以着子,为1的不可以
@@ -350,14 +357,16 @@ int16 ChessBoard::run(){
         }
         //所有节点估计完毕
         //新的hash添加到置换表
-        if(depth>2)
+        if(depth>1000)
         {
           h.value = value;
           h.hash = hash;
-          while(hashValuesLock[depth]);
-          hashValuesLock[depth] = true;
+//          while(hashValuesLock[depth]);
+//          hashValuesLock[depth] = true;
+          pthread_mutex_lock(&hashMymutex[depth]);
           hashValues[depth]->push_back(h);
-          hashValuesLock[depth] = false;
+          pthread_mutex_unlock(&hashMymutex[depth]);
+//          hashValuesLock[depth] = false;
           return(-h.value);
         }
         return (-value);
@@ -396,6 +405,7 @@ int16 ChessBoard::run(){
             for(uint8 j=0;j<8;j++)
               if((invalidPos[i] >> j) & 1)
                   validCap--;
+          uint8 validCapMin = validCap * 3/4;
           printf("validCap=%d\r\n",validCap);
         //评估每个可以着子的点,直到所有点评估完成,根节点需要返回最佳输入值,且增加对多线程的支持
           //建立新线程
@@ -412,7 +422,7 @@ int16 ChessBoard::run(){
           }
           while(1)
           {
-            if(validCap == 0)
+            if(validCap < validCapMin)
             {
               for(pthread_t q=0;q<maxThreads;q++)
               {
@@ -451,7 +461,7 @@ int16 ChessBoard::run(){
                           value = tempV;
                           bestStep = tempInp;
                     }
-                if(validCap != 0)
+                if(validCap >= validCapMin)
                 {
                   uint8 inp = getValidPos(invalidPos);
                   invalidPos[inp/8] |= (1<<(inp%8));

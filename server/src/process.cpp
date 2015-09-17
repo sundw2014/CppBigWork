@@ -39,30 +39,54 @@ static int LogIn(string &uname,string &passwd)
   MYSQL_RES *result;
   mysql_init(&mysql);
 
-  if (!mysql_real_connect(&mysql,"localhost", "root" , "9123" , "game" , 0 , NULL , 0))
+  if (!mysql_real_connect(&mysql,"localhost", "root" , "913256" , "game" , 0 , NULL , 0))
   {//判断连接是否失败。
     printf("Failed to connect to database: Error: %s/n",  mysql_error(&mysql));
     return -1;
   }
 
   query="select * from user where username='" + uname + "'";
-  if(mysql_real_query(&mysql, query.c_str(),query.length()))
-    return 1;   //没有此用户
-  if((result=mysql_store_result(&mysql))==NULL)
-    return 1;   //没有此用户
 
-  if(mysql_num_fields(result)!=1)
-    return 2;   //多个同名用户
+	do
+	{
+    result = mysql_store_result( &mysql );
+    mysql_free_result(result);
+	}while( !mysql_next_result( &mysql ) );
+
+	if(mysql_real_query(&mysql, query.c_str(),query.length()))
+	{
+		printf("Failed to exec query : Error:%s",mysql_error(&mysql));
+    return 1;   //没有此用户
+	}
+
+  result=mysql_store_result(&mysql);
+
+	// printf("rows = %d",mysql_num_rows(result));
+
+  if(mysql_num_rows(result)!=1)
+  {
+			mysql_free_result(result);
+		  return 2;   //多个同名用户
+	}
 
   MYSQL_ROW row = mysql_fetch_row(result);
-
+//	printf("fetch row ok\r\n");
   unsigned long *lengths=mysql_fetch_lengths(result);
 
-  string code(row[3],lengths[3]);
+  string code(row[2],lengths[2]);
+//	cout<<code<<"|"<<passwd<<"|"<<endl;
   if(code==passwd)
-    return 0; //登录成功
+  {
+			// printf("ok\r\n");
+			mysql_free_result(result);
+		  return 0; //登录成功
+	}
   else
-    return 4; //密码错误
+  {
+		//  printf("error\r\n");
+		 mysql_free_result(result);
+		 return 4; //密码错误
+	}
 }
 
 //注册处理
@@ -73,23 +97,50 @@ static int SignUp(string &uname,string &passwd)
   MYSQL_RES *result;
   mysql_init(&mysql);
 
-  if (!mysql_real_connect(&mysql,"localhost", "root" , "9123" , "game" , 0 , NULL , 0))
+  if (!mysql_real_connect(&mysql,"localhost", "root" , "913256" , "game" , 0 , NULL , 0))
   {//判断连接是否失败。
     printf("Failed to connect to database: Error: %s/n",  mysql_error(&mysql));
     return -1;
   }
 
-  query="select * from user where username='" + uname + "'";
-  mysql_real_query(&mysql, query.c_str(),query.length());
+	do
+	{
+    result = mysql_store_result( &mysql );
+    mysql_free_result(result);
+	}while( !mysql_next_result( &mysql ) );
 
-  if((result=mysql_store_result(&mysql))==NULL)
+
+  query="select * from user where username='" + uname + "'";
+	// cout<<query<<endl;
+  if(mysql_real_query(&mysql, query.c_str(),query.length()))
+	{
+		printf("Failed to exec query: Error: %s/n",  mysql_error(&mysql));
+	}
+	// cout<<"ok"<<endl;
+	result=mysql_store_result(&mysql);
+  if(!mysql_num_rows(result))
   {
-    query="insert into user (username,password) values ('"+uname+"','"+passwd;
-    if(mysql_real_query(&mysql, query.c_str(),query.length()))
-      return 1;
+		mysql_free_result(result);
+//		cout<<"no conflict"<<endl;
+    query="insert into user (username,password) values ('"+uname+"','"+passwd+"')";
+		// cout<<query<<endl;
+
+		do
+		{
+	    result = mysql_store_result( &mysql );
+	    mysql_free_result(result);
+		}while( !mysql_next_result( &mysql ) );
+
+		if(mysql_real_query(&mysql, query.c_str(),query.length()))
+    {
+			printf("Failed to exec query: Error: %s/n",  mysql_error(&mysql));
+			return 1;
+		}
     else
       return 0;
   }
+	else			//用户已存在
+		return -1;
 }
 
 void *ClientProcess(void *shareClientArg)
@@ -97,14 +148,18 @@ void *ClientProcess(void *shareClientArg)
   ClientArg *locArg = new ClientArg;
   //建立堆变量存储socket，释放
   memcpy(locArg,shareClientArg,sizeof(ClientArg));
-  memset(&shareClientArg,0,sizeof(ClientArg));
+  memset(shareClientArg,0,sizeof(ClientArg));
   ((ClientArg *)shareClientArg)->fd=-1;
   //子线程分离
   pthread_detach(pthread_self());
-  Client *client = new Client(locArg->fd,locArg->client_addr,locArg->client_addr_len);//当一个socket和client对象绑定之后socket回收有client析构时完成
+	printf("new Thread %x\r\n",pthread_self());
+//	printf("locArg->fd = %d\r\n",locArg->fd);
+  Client *client = new Client(locArg->fd,locArg->client_addr,locArg->client_addr_len);//当一个socket和client对象绑定之后socket回收由client析构时完成
   delete locArg;locArg=NULL;
+	sleep(1);
   if(!client->updateFrame())
   {//死连接,线程自杀.
+		printf("OUT OF TIME\r\n");
     delete client;
     return NULL;
   }
@@ -114,17 +169,23 @@ void *ClientProcess(void *shareClientArg)
   {
     if(LogIn(client->frame.value1,client->frame.value3)!=0)
     {
-      unsigned char temp[4]={6,0,0,0};
+			printf("login error\r\n");
+      unsigned char temp[4]={5,0,0,0};
       client->sendFrame(temp,"ERROR");
       //登录失败,具体原因根据返回值,线程自杀.
       delete client;
       return NULL;
     }
+		//printf("start GetHallInfo OK\r\n");
     //登录成功，返回房间列表
     RoomTableInfo tempInf=hall.GetHallInfo();
-    unsigned char temp[4]={11,0,0,sizeof(RoomTableInfo)};
+
+		// printf("GetHallInfo OK\r\n");
+		unsigned char temp[4]={10,0,0,sizeof(RoomTableInfo)};
     client->sendFrame(temp,"SUCCESSFUL",NULL,NULL,(char *)&tempInf);
-    unsigned times=0;
+
+		// printf("sendFrame OK\r\n");
+		unsigned times=0;
 
   while(1)
   {
@@ -132,7 +193,7 @@ void *ClientProcess(void *shareClientArg)
     {
       if(times>200)
       {////十分钟不选房间则切断连接,线程自杀.
-        unsigned char temp[4]={6,0,0,0};
+        unsigned char temp[4]={9,0,0,0};
         client->sendFrame(temp,"OUTOFTIME");
         delete client;
         return NULL;
@@ -149,20 +210,24 @@ void *ClientProcess(void *shareClientArg)
 }
 //登录end
 
+// cout<<client->frame.cmd<<"|"<<string("SIGNUP")<<"|"<<endl;
+
 //注册start
 if(client->frame.cmd==string("SIGNUP"))
 {
+	// printf("sign up request\r\n");
   if(SignUp(client->frame.value1,client->frame.value3)!=0)
   {
-    unsigned char temp[4]={6,0,0,0};
+		printf("error\r\n");
+    unsigned char temp[4]={5,0,0,0};
     client->sendFrame(temp,"ERROR");
     //登录失败,具体原因根据返回值,线程自杀.
     delete client;
     return NULL;
   }
-  unsigned char temp[4]={3,0,0,0};
+	printf("ok\r\n");
+  unsigned char temp[4]={2,0,0,0};
   client->sendFrame(temp,"OK");
-  //登录失败,具体原因根据返回值,线程自杀.
   delete client;
   return NULL;
 }

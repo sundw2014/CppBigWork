@@ -17,14 +17,18 @@ SOURCES += main.cpp\
     own1.cpp \
     own2.cpp \
     AI.cpp \
-    Zobrist.cpp
+    Zobrist.cpp \
+    protocol.cpp \
+    client.cpp
 
 HEADERS  += widget.h \
     own1.h \
     own2.h \
     AI.h \
     mType.h \
-    Zobrist.h
+    Zobrist.h \
+    protocol.hpp \
+    client.hpp
 
 FORMS    += widget.ui \
     own1.ui \
