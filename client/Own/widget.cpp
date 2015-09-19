@@ -10,17 +10,12 @@
 #include "protocol.hpp"
 #include "client.hpp"
 #include "unistd.h"
-
-#define ROOMMAX 32
-typedef struct
-{
-  unsigned int roomMax;
-  char num[ROOMMAX];
-}RoomTableInfo;
+#include "roomlist.h"
+#include "ui_roomlist.h"
 
 using namespace std;
 
-#define ServerIP "104.131.145.13"
+#define ServerIP "104.131.145.13"      //"127.0.0.1"
 Client *client = NULL;
 
 Widget::Widget(QWidget *parent) :
@@ -39,12 +34,12 @@ Widget::~Widget()
 
 void Widget::on_pushButton_2_clicked()
 {
-    if(edit){
-        Own1 o1;
-        o1.setModal(true);
-        o1.exec();
-    }
-    else QMessageBox::information(this, "error","you haven't login", QMessageBox::Ok);
+//    if(edit){
+//        Own1 o1;
+//        o1.setModal(true);
+//        o1.exec();
+//    }
+//    else QMessageBox::information(this, "error","you haven't login", QMessageBox::Ok);
 }
 
 void Widget::on_pushButton_clicked()
@@ -144,11 +139,14 @@ void Widget::on_pushButton_3_clicked()  // 登陆
    if(client->updateFrame())//3秒
      if(client->frame.cmd == string("SUCCESSFUL"))
      {
-       RoomTableInfo roomList;
-       memcpy(&roomList , client->receivedFrame->value3 , sizeof(RoomTableInfo));
-       for(int i=0;i<roomList.roomMax;i++)
-           printf("room%d:%d\r\n",i,roomList.num[i]);
-       QMessageBox::information(this, "ok","login succeessfully", QMessageBox::Ok);
+       RoomTableInfo *roomList = new RoomTableInfo;
+       memcpy(roomList , client->receivedFrame->value3 , sizeof(RoomTableInfo));
+//       for(int i=0;i<roomList->roomMax;i++)
+//           printf("room%d:%d\r\n",i,roomList.num[i]);
+//       QMessageBox::information(this, "ok","login succeessfully", QMessageBox::Ok);
+       RoomList roomTable(*client,*roomList,0);
+       delete roomList;
+       roomTable.exec();
      }
      else
        QMessageBox::information(this, "error","error", QMessageBox::Ok);

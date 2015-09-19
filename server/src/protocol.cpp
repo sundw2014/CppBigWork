@@ -40,8 +40,8 @@ bool Protocol::receiveFrame()
   //   }
   // printf("fd = %d\r\n",fd);
   int n = recv(fd, tempP , sizeof(receivedFrame) , 0);
-  // for(int i=0;i<sizeof(receivedFrame);i++)
-  //   printf("%2x",*tempP++);
+  // for(int i=0;i<n;i++)
+  //   printf("%c",*tempP++);
   // printf("n = %d,sizeof(receivedFrame) = %d\r\n",n,sizeof(receivedFrame));
   if(n==sizeof(receivedFrame))
     return isFrameValid(receivedFrame);
@@ -75,4 +75,10 @@ bool Protocol::isFrameValid(Frame &frame)
     if(frame.key[i] != (char)0xAD)
       return false;
   return true;
+}
+
+void Protocol::sendFrame(const Frame* frame)
+{
+    memcpy(&sendingFrame,frame,sizeof(Frame));
+    sendFrameReal();
 }

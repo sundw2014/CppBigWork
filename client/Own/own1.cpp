@@ -4,15 +4,23 @@
 #include <QtWidgets>
 #include <QSound>
 #include "widget.h"
+#include "unistd.h"
 
-Own1::Own1(QWidget *parent) :
+Own1::Own1(Client &mclient,int myTurn,QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Own1)
+    ui(new Ui::Own1),
+    client(mclient),
+    _myTurn(myTurn)
 {
     ui->setupUi(this);
     resize(880 , 680);
     memset(a, 0, 16 * 16 * sizeof(int));
     player = 0;
+    gameControl = new StateMachine(*this,client);
+    if(_myTurn==1)
+        gameControl->setState(WAIT);
+    else
+        gameControl->setState(OTHSTURN);
     //QMessageBox::information(this, "Win", users, QMessageBox::Ok);
 }
 
@@ -57,33 +65,65 @@ void Own1::paintEvent(QPaintEvent *)
 
 void Own1::mouseReleaseEvent(QMouseEvent *e)
 {
-    if (check){
-    int x, y;
-    if(e->x() >= 20 && e->x() < 660 && e->y() >= 20 && e->y() < 660)
+    if(gameControl->getSTATE()==YOURTURN)
     {
-        x = (e->x() - 20) / 40;
-        y = (e->y() - 20) / 40;
+        int x, y;
+        if(e->x() >= 20 && e->x() < 660 && e->y() >= 20 && e->y() < 660)
+        {
+            x = (e->x() - 20) / 40;
+            y = (e->y() - 20) / 40;
 
-        if (!a[x][y])
-        {
-            a[x][y] = player % 2 + 1;
-            file[player].inisave(x , y);
-            player +=1;
-            QSound::play("D://1.wav");
-        }
-        if(Win(x, y))
-        {
+            if (!a[x][y])
+            {
+                a[x][y] = _myTurn;
+                file[player].inisave(x , y);
+                QSound::play("D://1.wav");
+                unsigned char tempLen[4] = {6,1,0,0};
+                unsigned char *newINP = new unsigned char;
+                *newINP = x*16+y;
+                client.sendFrame(tempLen,"NEWINP",(char *)newINP);
+                sleep(1);
+                delete newINP;
+                gameControl->setState(OTHSTURN);
+            }
+            if(Win(x, y))
+            {
+                update();
+                QMessageBox::information(this, "win", "YOU WIN", QMessageBox::Ok);
+                gameControl->setState(OVER);
+            }
             update();
-            int m = player % 2 + 1;
-            if (m==2) QMessageBox::information(this, "Win", "Black Win", QMessageBox::Ok);
-
-            if (m==1) QMessageBox::information(this, "Win", "White Win", QMessageBox::Ok);
+            gameControl->runOnce();
         }
+        update();
+    }
+//    if (check){
+//    int x, y;
+//    if(e->x() >= 20 && e->x() < 660 && e->y() >= 20 && e->y() < 660)
+//    {
+//        x = (e->x() - 20) / 40;
+//        y = (e->y() - 20) / 40;
 
-    }
-    update();
-    }
-    else QMessageBox::information(this, "error", "Stop do this", QMessageBox::Ok);
+//        if (!a[x][y])
+//        {
+//            a[x][y] = player % 2 + 1;
+//            file[player].inisave(x , y);
+//            player +=1;
+//            QSound::play("D://1.wav");
+//        }
+//        if(Win(x, y))
+//        {
+//            update();
+//            int m = player % 2 + 1;
+//            if (m==2) QMessageBox::information(this, "Win", "Black Win", QMessageBox::Ok);
+
+//            if (m==1) QMessageBox::information(this, "Win", "White Win", QMessageBox::Ok);
+//        }
+
+//    }
+//    update();
+//    }
+//    else QMessageBox::information(this, "error", "Stop do this", QMessageBox::Ok);
 }
 
 int Own1::Win(int x, int y)                            // 胜利条件

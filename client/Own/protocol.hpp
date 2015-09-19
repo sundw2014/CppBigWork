@@ -22,6 +22,13 @@ typedef struct
   unsigned char length[4];
 }Frame;
 
+#define ROOMMAX 32
+typedef struct
+{
+  unsigned int roomMax;
+  char num[ROOMMAX];
+}RoomTableInfo;
+
 class Protocol {
 private:
 

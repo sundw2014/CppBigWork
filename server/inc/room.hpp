@@ -9,6 +9,7 @@ private:
   Client *client[2];
   bool state;
   unsigned char numOfClients;
+  unsigned char turn;
 public:
   Room();
   ~Room();
@@ -16,6 +17,7 @@ public:
   int addClient(Client &newClient);
   bool isPlaying(){return state;}
   unsigned char GetNumOfClients(){return numOfClients;}
+  unsigned char GameControl();
 };
 
 #endif

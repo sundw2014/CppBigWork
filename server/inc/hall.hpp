@@ -20,6 +20,13 @@ public:
   int createNewRoom(unsigned int roomNo);
   int joinRoom(unsigned int roomNo,Client &client);
   RoomTableInfo GetHallInfo();
+
+  Room *getRoom(unsigned char index)
+  {
+    if(index >= ROOMMAX)
+      return NULL;
+    return roomTable[index];
+  }
 };
 
 #endif

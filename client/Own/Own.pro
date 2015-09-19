@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     AI.cpp \
     Zobrist.cpp \
     protocol.cpp \
-    client.cpp
+    client.cpp \
+    roomlist.cpp \
+    statemachine.cpp
 
 HEADERS  += widget.h \
     own1.h \
@@ -28,10 +30,13 @@ HEADERS  += widget.h \
     mType.h \
     Zobrist.h \
     protocol.hpp \
-    client.hpp
+    client.hpp \
+    roomlist.h \
+    statemachine.h
 
 FORMS    += widget.ui \
     own1.ui \
-    own2.ui
+    own2.ui \
+    roomlist.ui
 
 QT +=multimedia

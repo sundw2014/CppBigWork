@@ -31,13 +31,20 @@ bool Protocol::receiveFrame()
 //  if (1){
 	  //select(fd+1 , &fds , NULL , NULL ,&tv)>0) {
     //printf("start while\r\n");
-  unsigned char cnt=0,size=sizeof(Frame);
-  while ((cnt++ < size) && (read(fd , &tempCh , 1) == 1)){
-      *(tempP++) = tempCh;
-    //while(1);
-    }
-  return isFrameValid(receivedFrame);
-  }
+//  unsigned char cnt=0,size=sizeof(Frame);
+//  while ((cnt++ < size) && (read(fd , &tempCh , 1) == 1)){
+//      *(tempP++) = tempCh;
+//    //while(1);
+//    }
+//  return isFrameValid(receivedFrame);
+  int n = recv(fd, tempP , sizeof(receivedFrame) , 0);
+  // for(int i=0;i<n;i++)
+  //   printf("%c",*tempP++);
+  // printf("n = %d,sizeof(receivedFrame) = %d\r\n",n,sizeof(receivedFrame));
+  if(n==sizeof(receivedFrame))
+    return isFrameValid(receivedFrame);
+  return false;
+}
 
 void Protocol::sendFrame(const unsigned char lengths[],const char *cmd ,const char *value1,const char *value2,const char *value3)
 {

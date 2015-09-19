@@ -1,6 +1,8 @@
 #include "hall.hpp"
 #include <stdlib.h>
 #include "memory.h"
+#include "process.h"
+#include "stdio.h"
 
 Hall::Hall()
 {
@@ -23,12 +25,25 @@ int Hall::createNewRoom(unsigned int roomNo)
 
 int Hall::joinRoom(unsigned int roomNo,Client &client)
 {
-  if(roomTable[roomNo]!=NULL)
-    if(!createNewRoom(roomNo))
+  if(roomTable[roomNo]==NULL)//还没有这个房间,新建一个
+    if(createNewRoom(roomNo) != 0)
       return -1;
   if(roomTable[roomNo]->isFull())
     return -1;
+
+  // printf("add client...\r\n");
   roomTable[roomNo]->addClient(client);
+  // printf("add OK...\r\n");
+
+  if(roomTable[roomNo]->isFull())//人已经到位开始游戏，新建线程
+  {
+        pthread_t tid;
+
+        GameArg *tempArg = new GameArg{roomTable[roomNo]};
+        printf("roomTable[roomNo] = %x\r\n",roomTable[roomNo]);
+        printf("roomTable[roomNo] = %x\r\n",tempArg->room);
+        pthread_create(&tid , NULL , gameRunning , tempArg);
+  }
   return 0;
 }
 

@@ -15,6 +15,7 @@ CPPOBJ = $(CPPSRC:.cpp=.o)
 
 CFLAGS = $(patsubst %,-I%,$(EXTRAINCDIRS))
 CFLAGS += `mysql_config --cflags`
+CFLAGS += -g
 
 LDFLAGS += -lpthread
 LDFLAGS += -Wl,-Map=$(TARGET).map

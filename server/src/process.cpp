@@ -20,16 +20,11 @@
 #include "typelib.h"
 #include <string>
 #include "hall.hpp"
+#include "process.h"
+
 using namespace std;
 
 extern Hall hall;
-
-typedef struct
-{
-	struct sockaddr_in client_addr;
-	unsigned int client_addr_len;
-	int fd;
-}ClientArg;
 
 //登录处理
 static int LogIn(string &uname,string &passwd)
@@ -177,6 +172,9 @@ void *ClientProcess(void *shareClientArg)
       return NULL;
     }
 		//printf("start GetHallInfo OK\r\n");
+    //登录成功,保存客户端用户名
+    client->setUserName(client->frame.value1);
+
     //登录成功，返回房间列表
     RoomTableInfo tempInf=hall.GetHallInfo();
 
@@ -187,26 +185,58 @@ void *ClientProcess(void *shareClientArg)
 		// printf("sendFrame OK\r\n");
 		unsigned times=0;
 
-  while(1)
-  {
     while(1)
     {
-      if(times>200)
+      if(times>20)
       {////十分钟不选房间则切断连接,线程自杀.
         unsigned char temp[4]={9,0,0,0};
         client->sendFrame(temp,"OUTOFTIME");
         delete client;
         return NULL;
       }
-
+      // printf("wait...\r\n");
+      sleep(7);
       if(client->updateFrame())//3秒
-        if(client->frame.cmd == string("JOININ"))
+      {  if(client->frame.cmd == string("JOININ"))
           break;
+          // printf("newFrame\r\n");
+          // cout<<client->frame.cmd<<endl;
+      }
       times++;
     }
-    if(hall.joinRoom(atoi(client->frame.value1.c_str()),*client))
-      return NULL;
-  }
+    printf("roomNo = %d\r\n",*(unsigned char *)(client->receivedFrame->value1));
+    if(hall.joinRoom(*(unsigned char *)(client->receivedFrame->value1),*client))
+
+    sleep(1);//等待房间新建了完成
+    // printf("ok0\r\n");
+    Room *tempRoom = hall.getRoom(*(unsigned char *)(client->receivedFrame->value1));
+    if(tempRoom == NULL)
+    {
+       printf("wrong index\r\n");
+       return NULL;
+    }
+    unsigned char num = tempRoom->GetNumOfClients();
+    // printf("num = %d\r\n",num);
+    if(num == 0)
+    {
+      printf("ok1\r\n");
+      unsigned char temp[4]={3,0,0,0};
+      client->sendFrame(temp,"OK1");
+    }
+    else if(num == 1)
+    {
+      printf("ok2\r\n");
+      unsigned char temp[4]={3,0,0,0};
+      client->sendFrame(temp,"OK2");
+    }
+    else
+    {
+      unsigned char temp[4]={10,0,0,0};
+      client->sendFrame(temp,"ROOMISFULL");
+    }
+
+    return NULL;
+
 }
 //登录end
 
@@ -235,4 +265,18 @@ if(client->frame.cmd==string("SIGNUP"))
   //非登录或连接
   delete client;
   return NULL;
+}
+
+void *gameRunning(void *Arg)
+{
+
+    //子线程分离
+    pthread_detach(pthread_self());
+  	printf("new Thread %x\r\n",pthread_self());
+    printf("roomTable[roomNo] = %x\r\n",((GameArg *)Arg)->room);
+		unsigned char result = ((GameArg *)Arg)->room->GameControl();
+    delete (GameArg *)Arg;
+
+    if(result);//会有什么处理
+		return NULL;
 }

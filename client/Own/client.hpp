@@ -14,7 +14,6 @@ private:
   int socketFd;
   struct sockaddr_in client_addr;
 	unsigned int client_addr_len;
-  unsigned long userID;
   Protocol protocol;
   bool parseFrame();
 public:

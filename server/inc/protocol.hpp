@@ -34,6 +34,7 @@ public:
 
 	//send the frame directly
   void sendFrame(const unsigned char lengths[],const char *cmd , const char *value1=NULL,const char *value2=NULL,const char *value3=NULL);
+  void sendFrame(const Frame* frame);
 
 	bool available();
 

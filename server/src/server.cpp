@@ -14,12 +14,6 @@
 #include "hall.hpp"
 #include <signal.h>
 
-typedef struct
-{
-	struct sockaddr_in client_addr;
-	unsigned int client_addr_len;
-	int fd;
-}ClientArg;
 static void ctrlCHandler(int)
 {
 	//关闭所有子线程并提示用户服务器即将停止服务
