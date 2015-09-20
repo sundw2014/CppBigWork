@@ -21,7 +21,7 @@ private:
 	int fd;
 	fd_set fds;
 	struct timeval tv;
-
+  char *pointer;
 	Frame sendingFrame;                           //the frame of the protocol
 	void sendFrameReal();                       //send the frame prototype
 

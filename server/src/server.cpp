@@ -14,13 +14,15 @@
 #include "hall.hpp"
 #include <signal.h>
 
+Hall hall;
+
 static void ctrlCHandler(int)
 {
+	hall.~Hall();
 	//关闭所有子线程并提示用户服务器即将停止服务
 	exit(0);
 }
 
-Hall hall;
 
 int main(void)
 {

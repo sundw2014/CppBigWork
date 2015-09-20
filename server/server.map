@@ -287,7 +287,7 @@ LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
  *(.iplt)
  .iplt          0x0000000000000000        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
 
-.text           0x0000000000402070     0x2f72
+.text           0x0000000000402070     0x2f62
  *(.text.unlikely .text.*_unlikely .text.unlikely.*)
  *(.text.exit .text.exit.*)
  *(.text.startup .text.startup.*)
@@ -298,165 +298,163 @@ LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
  .text          0x000000000040209a        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
  *fill*         0x000000000040209a        0x6 
  .text          0x00000000004020a0       0xbd /usr/lib64/gcc/x86_64-suse-linux/4.8/crtbegin.o
- .text          0x000000000040215d      0x2ee ./src/server.o
-                0x0000000000402172                main
- .text          0x000000000040244b        0x0 ./src/updateDB.o
- *fill*         0x000000000040244b        0x1 
- .text          0x000000000040244c      0x371 ./src/protocol.o
-                0x000000000040244c                Protocol::sendFrameReal()
-                0x000000000040247a                Protocol::Protocol(int)
-                0x000000000040247a                Protocol::Protocol(int)
-                0x000000000040257c                Protocol::receiveFrame()
-                0x00000000004025e8                Protocol::sendFrame(unsigned char const*, char const*, char const*, char const*, char const*)
-                0x0000000000402734                Protocol::available()
-                0x000000000040273e                Protocol::isFrameValid(Frame&)
-                0x0000000000402780                Protocol::sendFrame(Frame const*)
- *fill*         0x00000000004027bd        0x1 
- .text          0x00000000004027be      0xbd8 ./src/client.o
-                0x00000000004027be                Client::Client(int, sockaddr_in&, unsigned int&)
-                0x00000000004027be                Client::Client(int, sockaddr_in&, unsigned int&)
-                0x000000000040288a                Client::~Client()
-                0x000000000040288a                Client::~Client()
-                0x0000000000402908                Client::updateFrame()
-                0x000000000040297e                Client::parseFrame()
-                0x0000000000402be4                Client::sendFrame(unsigned char const*, char const*, char const*, char const*, char const*)
-                0x0000000000402c36                Client::sendFrame(Frame const*)
-                0x0000000000402c64                Client::clientUpdateDB()
-                0x0000000000402fce                Client::getClientInfoDB()
+ .text          0x000000000040215d      0x2f8 ./src/server.o
+                0x000000000040217c                main
+ .text          0x0000000000402455        0x0 ./src/updateDB.o
+ *fill*         0x0000000000402455        0x1 
+ .text          0x0000000000402456      0x3ed ./src/protocol.o
+                0x0000000000402456                Protocol::sendFrameReal()
+                0x0000000000402484                Protocol::Protocol(int)
+                0x0000000000402484                Protocol::Protocol(int)
+                0x000000000040259c                Protocol::receiveFrame()
+                0x000000000040266e                Protocol::sendFrame(unsigned char const*, char const*, char const*, char const*, char const*)
+                0x00000000004027ba                Protocol::available()
+                0x00000000004027c4                Protocol::isFrameValid(Frame&)
+                0x0000000000402806                Protocol::sendFrame(Frame const*)
+ *fill*         0x0000000000402843        0x1 
+ .text          0x0000000000402844      0xc02 ./src/client.o
+                0x0000000000402844                Client::Client(int, sockaddr_in&, unsigned int&)
+                0x0000000000402844                Client::Client(int, sockaddr_in&, unsigned int&)
+                0x0000000000402910                Client::~Client()
+                0x0000000000402910                Client::~Client()
+                0x000000000040298e                Client::updateFrame()
+                0x0000000000402a10                Client::parseFrame()
+                0x0000000000402c76                Client::sendFrame(unsigned char const*, char const*, char const*, char const*, char const*)
+                0x0000000000402cc8                Client::sendFrame(Frame const*)
+                0x0000000000402cf6                Client::clientUpdateDB()
+                0x000000000040307e                Client::getClientInfoDB()
  .text._ZNSt11char_traitsIcE6lengthEPKc
-                0x0000000000403396       0x2c ./src/client.o
-                0x0000000000403396                std::char_traits<char>::length(char const*)
+                0x0000000000403446       0x2c ./src/client.o
+                0x0000000000403446                std::char_traits<char>::length(char const*)
  .text._ZStorSt13_Ios_OpenmodeS_
-                0x00000000004033c2       0x14 ./src/client.o
-                0x00000000004033c2                std::operator|(std::_Ios_Openmode, std::_Ios_Openmode)
+                0x0000000000403472       0x14 ./src/client.o
+                0x0000000000403472                std::operator|(std::_Ios_Openmode, std::_Ios_Openmode)
  .text._ZN6cFrameC2Ev
-                0x00000000004033d6       0x96 ./src/client.o
-                0x00000000004033d6                cFrame::cFrame()
-                0x00000000004033d6                cFrame::cFrame()
+                0x0000000000403486       0x96 ./src/client.o
+                0x0000000000403486                cFrame::cFrame()
+                0x0000000000403486                cFrame::cFrame()
  .text._ZN6cFrameD2Ev
-                0x000000000040346c       0x96 ./src/client.o
-                0x000000000040346c                cFrame::~cFrame()
-                0x000000000040346c                cFrame::~cFrame()
+                0x000000000040351c       0x96 ./src/client.o
+                0x000000000040351c                cFrame::~cFrame()
+                0x000000000040351c                cFrame::~cFrame()
  .text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_
-                0x0000000000403502       0xa4 ./src/client.o
-                0x0000000000403502                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+                0x00000000004035b2       0xa4 ./src/client.o
+                0x00000000004035b2                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
  .text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_
-                0x00000000004035a6       0x62 ./src/client.o
-                0x00000000004035a6                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)
+                0x0000000000403656       0x62 ./src/client.o
+                0x0000000000403656                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)
  .text._ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_S8_
-                0x0000000000403608       0x62 ./src/client.o
-                0x0000000000403608                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
- .text          0x000000000040366a      0xeaf ./src/process.o
-                0x0000000000403d1e                ClientProcess(void*)
-                0x0000000000404459                gameRunning(void*)
+                0x00000000004036b8       0x62 ./src/client.o
+                0x00000000004036b8                std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ .text          0x000000000040371a      0xe8b ./src/process.o
+                0x0000000000403dce                ClientProcess(void*)
+                0x00000000004044f4                gameRunning(void*)
  .text._ZNSt11char_traitsIcE7compareEPKcS2_m
-                0x0000000000404519       0x2d ./src/process.o
-                0x0000000000404519                std::char_traits<char>::compare(char const*, char const*, unsigned long)
+                0x00000000004045a5       0x2d ./src/process.o
+                0x00000000004045a5                std::char_traits<char>::compare(char const*, char const*, unsigned long)
  .text._ZN6Client11setUserNameERKSs
-                0x0000000000404546       0x2c ./src/process.o
-                0x0000000000404546                Client::setUserName(std::string const&)
+                0x00000000004045d2       0x2c ./src/process.o
+                0x00000000004045d2                Client::setUserName(std::string const&)
  .text._ZN4Room15GetNumOfClientsEv
-                0x0000000000404572       0x12 ./src/process.o
-                0x0000000000404572                Room::GetNumOfClients()
+                0x00000000004045fe       0x12 ./src/process.o
+                0x00000000004045fe                Room::GetNumOfClients()
  .text._ZN4Hall7getRoomEh
-                0x0000000000404584       0x31 ./src/process.o
-                0x0000000000404584                Hall::getRoom(unsigned char)
+                0x0000000000404610       0x31 ./src/process.o
+                0x0000000000404610                Hall::getRoom(unsigned char)
  .text._ZSteqIcEN9__gnu_cxx11__enable_ifIXsrSt9__is_charIT_E7__valueEbE6__typeERKSbIS3_St11char_traitsIS3_ESaIS3_EESC_
-                0x00000000004045b5       0x84 ./src/process.o
-                0x00000000004045b5                __gnu_cxx::__enable_if<std::__is_char<char>::__value, bool>::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
- *fill*         0x0000000000404639        0x1 
- .text          0x000000000040463a      0x615 ./src/room.o
-                0x000000000040463a                Room::Room()
-                0x000000000040463a                Room::Room()
-                0x0000000000404676                Room::~Room()
-                0x0000000000404676                Room::~Room()
-                0x00000000004046dc                Room::addClient(Client&)
-                0x0000000000404784                Room::isFull()
-                0x00000000004047b4                Room::GameControl()
- *fill*         0x0000000000404c4f        0x1 
- .text          0x0000000000404c50      0x312 ./src/hall.o
-                0x0000000000404c50                Hall::Hall()
-                0x0000000000404c50                Hall::Hall()
-                0x0000000000404c88                Hall::~Hall()
-                0x0000000000404c88                Hall::~Hall()
-                0x0000000000404cf2                Hall::createNewRoom(unsigned int)
-                0x0000000000404d7a                Hall::joinRoom(unsigned int, Client&)
-                0x0000000000404ec4                Hall::GetHallInfo()
- *fill*         0x0000000000404f62        0xe 
- .text          0x0000000000404f70       0x72 /usr/lib64/libc_nonshared.a(elf-init.oS)
-                0x0000000000404f70                __libc_csu_init
-                0x0000000000404fe0                __libc_csu_fini
- .text          0x0000000000404fe2        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
- .text          0x0000000000404fe2        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+                0x0000000000404641       0x84 ./src/process.o
+                0x0000000000404641                __gnu_cxx::__enable_if<std::__is_char<char>::__value, bool>::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ *fill*         0x00000000004046c5        0x1 
+ .text          0x00000000004046c6      0x5b0 ./src/room.o
+                0x00000000004046c6                Room::Room()
+                0x00000000004046c6                Room::Room()
+                0x0000000000404702                Room::~Room()
+                0x0000000000404702                Room::~Room()
+                0x0000000000404768                Room::addClient(Client&)
+                0x00000000004047d8                Room::isFull()
+                0x0000000000404808                Room::GameControl()
+ .text          0x0000000000404c76      0x2de ./src/hall.o
+                0x0000000000404c76                Hall::Hall()
+                0x0000000000404c76                Hall::Hall()
+                0x0000000000404cae                Hall::~Hall()
+                0x0000000000404cae                Hall::~Hall()
+                0x0000000000404d18                Hall::createNewRoom(unsigned int)
+                0x0000000000404da0                Hall::joinRoom(unsigned int, Client&)
+                0x0000000000404eb6                Hall::GetHallInfo()
+ *fill*         0x0000000000404f54        0xc 
+ .text          0x0000000000404f60       0x72 /usr/lib64/libc_nonshared.a(elf-init.oS)
+                0x0000000000404f60                __libc_csu_init
+                0x0000000000404fd0                __libc_csu_fini
+ .text          0x0000000000404fd2        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+ .text          0x0000000000404fd2        0x0 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
  *(.gnu.warning)
 
-.fini           0x0000000000404fe4        0x9
+.fini           0x0000000000404fd4        0x9
  *(SORT(.fini))
- .fini          0x0000000000404fe4        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
-                0x0000000000404fe4                _fini
- .fini          0x0000000000404fe8        0x5 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
-                0x0000000000404fed                PROVIDE (__etext, .)
-                0x0000000000404fed                PROVIDE (_etext, .)
-                0x0000000000404fed                PROVIDE (etext, .)
+ .fini          0x0000000000404fd4        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
+                0x0000000000404fd4                _fini
+ .fini          0x0000000000404fd8        0x5 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+                0x0000000000404fdd                PROVIDE (__etext, .)
+                0x0000000000404fdd                PROVIDE (_etext, .)
+                0x0000000000404fdd                PROVIDE (etext, .)
 
-.rodata         0x0000000000404ff0      0x441
+.rodata         0x0000000000404fe0      0x3b8
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata.cst4   0x0000000000404ff0        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
-                0x0000000000404ff0                _IO_stdin_used
- *fill*         0x0000000000404ff4        0x4 
- .rodata        0x0000000000404ff8       0xee ./src/server.o
- *fill*         0x00000000004050e6        0x2 
- .rodata        0x00000000004050e8       0xd0 ./src/client.o
- .rodata        0x00000000004051b8      0x1b8 ./src/process.o
- .rodata        0x0000000000405370       0xa8 ./src/room.o
- .rodata        0x0000000000405418       0x19 ./src/hall.o
+ .rodata.cst4   0x0000000000404fe0        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+                0x0000000000404fe0                _IO_stdin_used
+ *fill*         0x0000000000404fe4        0x4 
+ .rodata        0x0000000000404fe8       0xee ./src/server.o
+ *fill*         0x00000000004050d6        0x2 
+ .rodata        0x00000000004050d8       0xd0 ./src/client.o
+ .rodata        0x00000000004051a8      0x1b8 ./src/process.o
+ .rodata        0x0000000000405360       0x38 ./src/room.o
 
 .rodata1
  *(.rodata1)
 
-.eh_frame_hdr   0x0000000000405434      0x1b4
+.eh_frame_hdr   0x0000000000405398      0x1b4
  *(.eh_frame_hdr)
- .eh_frame_hdr  0x0000000000405434      0x1b4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .eh_frame_hdr  0x0000000000405398      0x1b4 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
 
-.eh_frame       0x00000000004055e8      0x7ac
+.eh_frame       0x0000000000405550      0x7ac
  *(.eh_frame)
- .eh_frame      0x00000000004055e8       0x30 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
- .eh_frame      0x0000000000405618       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
- .eh_frame      0x0000000000405658       0x80 ./src/server.o
+ .eh_frame      0x0000000000405550       0x30 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .eh_frame      0x0000000000405580       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .eh_frame      0x00000000004055c0       0x80 ./src/server.o
                                          0x90 (size before relaxing)
- .eh_frame      0x00000000004056d8       0xe8 ./src/protocol.o
+ .eh_frame      0x0000000000405640       0xe8 ./src/protocol.o
                                         0x100 (size before relaxing)
- .eh_frame      0x00000000004057c0      0x290 ./src/client.o
+ .eh_frame      0x0000000000405728      0x290 ./src/client.o
                                         0x2a8 (size before relaxing)
- .eh_frame      0x0000000000405a50      0x180 ./src/process.o
+ .eh_frame      0x00000000004059b8      0x180 ./src/process.o
                                         0x250 (size before relaxing)
- .eh_frame      0x0000000000405bd0       0xb0 ./src/room.o
+ .eh_frame      0x0000000000405b38       0xb0 ./src/room.o
                                         0x128 (size before relaxing)
- .eh_frame      0x0000000000405c80       0xb0 ./src/hall.o
+ .eh_frame      0x0000000000405be8       0xb0 ./src/hall.o
                                         0x108 (size before relaxing)
- .eh_frame      0x0000000000405d30       0x60 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .eh_frame      0x0000000000405c98       0x60 /usr/lib64/libc_nonshared.a(elf-init.oS)
                                          0x78 (size before relaxing)
- .eh_frame      0x0000000000405d90        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
+ .eh_frame      0x0000000000405cf8        0x4 /usr/lib64/gcc/x86_64-suse-linux/4.8/crtend.o
 
 .gcc_except_table
-                0x0000000000405d94      0x34f
+                0x0000000000405cfc      0x34f
  *(.gcc_except_table .gcc_except_table.*)
  .gcc_except_table._ZN6cFrameC2Ev
-                0x0000000000405d94       0x19 ./src/client.o
+                0x0000000000405cfc       0x19 ./src/client.o
  .gcc_except_table._ZN6cFrameD2Ev
-                0x0000000000405dad       0x19 ./src/client.o
+                0x0000000000405d15       0x19 ./src/client.o
  .gcc_except_table
-                0x0000000000405dc6      0x170 ./src/client.o
+                0x0000000000405d2e      0x170 ./src/client.o
  .gcc_except_table
-                0x0000000000405f36      0x140 ./src/process.o
+                0x0000000000405e9e      0x140 ./src/process.o
  .gcc_except_table
-                0x0000000000406076       0x5d ./src/room.o
+                0x0000000000405fde       0x5d ./src/room.o
  .gcc_except_table
-                0x00000000004060d3       0x10 ./src/hall.o
+                0x000000000040603b       0x10 ./src/hall.o
 
 .exception_ranges
  *(.exception_ranges .exception_ranges*)
-                0x00000000004060e3                . = (ALIGN (0x200000) - ((0x200000 - .) & 0x1fffff))
+                0x000000000040604b                . = (ALIGN (0x200000) - ((0x200000 - .) & 0x1fffff))
                 0x0000000000606d53                . = DATA_SEGMENT_ALIGN (0x200000, 0x1000)
 
 .eh_frame
@@ -658,93 +656,49 @@ LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000      0x350
+.debug_aranges  0x0000000000000000      0x100
  *(.debug_aranges)
  .debug_aranges
                 0x0000000000000000       0x50 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
  .debug_aranges
                 0x0000000000000050       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
  .debug_aranges
-                0x0000000000000090       0x30 ./src/server.o
+                0x0000000000000090       0x30 /usr/lib64/libc_nonshared.a(elf-init.oS)
  .debug_aranges
-                0x00000000000000c0       0x30 ./src/protocol.o
- .debug_aranges
-                0x00000000000000f0       0xa0 ./src/client.o
- .debug_aranges
-                0x0000000000000190       0xc0 ./src/process.o
- .debug_aranges
-                0x0000000000000250       0x50 ./src/room.o
- .debug_aranges
-                0x00000000000002a0       0x40 ./src/hall.o
- .debug_aranges
-                0x00000000000002e0       0x30 /usr/lib64/libc_nonshared.a(elf-init.oS)
- .debug_aranges
-                0x0000000000000310       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+                0x00000000000000c0       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x15654
+.debug_info     0x0000000000000000      0x31b
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000       0xf3 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
  .debug_info    0x00000000000000f3       0x68 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
- .debug_info    0x000000000000015b     0x3f22 ./src/server.o
- .debug_info    0x000000000000407d     0x13ee ./src/protocol.o
- .debug_info    0x000000000000546b     0x4e46 ./src/client.o
- .debug_info    0x000000000000a2b1     0x4bbb ./src/process.o
- .debug_info    0x000000000000ee6c     0x328c ./src/room.o
- .debug_info    0x00000000000120f8     0x339c ./src/hall.o
- .debug_info    0x0000000000015494      0x158 /usr/lib64/libc_nonshared.a(elf-init.oS)
- .debug_info    0x00000000000155ec       0x68 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+ .debug_info    0x000000000000015b      0x158 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_info    0x00000000000002b3       0x68 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 
-.debug_abbrev   0x0000000000000000     0x2515
+.debug_abbrev   0x0000000000000000      0x183
  *(.debug_abbrev)
  .debug_abbrev  0x0000000000000000       0x52 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
  .debug_abbrev  0x0000000000000052       0x12 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
- .debug_abbrev  0x0000000000000064      0x64a ./src/server.o
- .debug_abbrev  0x00000000000006ae      0x375 ./src/protocol.o
- .debug_abbrev  0x0000000000000a23      0x79e ./src/client.o
- .debug_abbrev  0x00000000000011c1      0x76f ./src/process.o
- .debug_abbrev  0x0000000000001930      0x572 ./src/room.o
- .debug_abbrev  0x0000000000001ea2      0x554 ./src/hall.o
- .debug_abbrev  0x00000000000023f6      0x10d /usr/lib64/libc_nonshared.a(elf-init.oS)
- .debug_abbrev  0x0000000000002503       0x12 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+ .debug_abbrev  0x0000000000000064      0x10d /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_abbrev  0x0000000000000171       0x12 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 
-.debug_line     0x0000000000000000     0x1be0
+.debug_line     0x0000000000000000      0x1e7
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x0000000000000000       0x84 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
  .debug_line    0x0000000000000084       0x64 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
- .debug_line    0x00000000000000e8      0x3ae ./src/server.o
- .debug_line    0x0000000000000496        0x0 ./src/updateDB.o
- .debug_line    0x0000000000000496      0x282 ./src/protocol.o
- .debug_line    0x0000000000000718      0x60b ./src/client.o
- .debug_line    0x0000000000000d23      0x670 ./src/process.o
- .debug_line    0x0000000000001393      0x3d9 ./src/room.o
- .debug_line    0x000000000000176c      0x375 ./src/hall.o
- .debug_line    0x0000000000001ae1       0x9e /usr/lib64/libc_nonshared.a(elf-init.oS)
- .debug_line    0x0000000000001b7f       0x61 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+ .debug_line    0x00000000000000e8       0x9e /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_line    0x0000000000000186       0x61 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 
 .debug_frame
  *(.debug_frame)
 
-.debug_str      0x0000000000000000     0x4f93
+.debug_str      0x0000000000000000      0x2ad
  *(.debug_str)
- .debug_str     0x0000000000000000      0x148 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
+ .debug_str     0x0000000000000000      0x163 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crt1.o
                                         0x188 (size before relaxing)
- .debug_str     0x0000000000000148     0x366f ./src/server.o
-                                       0x39db (size before relaxing)
- .debug_str     0x00000000000037b7        0x0 ./src/updateDB.o
- .debug_str     0x00000000000037b7       0x52 ./src/protocol.o
-                                        0x9b5 (size before relaxing)
- .debug_str     0x0000000000003809     0x148d ./src/client.o
-                                       0x3c98 (size before relaxing)
- .debug_str     0x0000000000004c96      0x158 ./src/process.o
-                                       0x394c (size before relaxing)
- .debug_str     0x0000000000004dee       0x31 ./src/room.o
-                                       0x2419 (size before relaxing)
- .debug_str     0x0000000000004e1f       0x36 ./src/hall.o
-                                       0x244e (size before relaxing)
- .debug_str     0x0000000000004e55      0x13e /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_str     0x0000000000000163      0x14a /usr/lib64/libc_nonshared.a(elf-init.oS)
                                         0x19b (size before relaxing)
 
 .debug_loc      0x0000000000000000      0x11b
@@ -769,15 +723,11 @@ LOAD /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x0000000000000000      0x2e0
+.debug_ranges   0x0000000000000000       0xd0
  *(.debug_ranges)
  .debug_ranges  0x0000000000000000       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crti.o
- .debug_ranges  0x0000000000000040       0x90 ./src/client.o
- .debug_ranges  0x00000000000000d0       0xe0 ./src/process.o
- .debug_ranges  0x00000000000001b0       0x70 ./src/room.o
- .debug_ranges  0x0000000000000220       0x30 ./src/hall.o
- .debug_ranges  0x0000000000000250       0x50 /usr/lib64/libc_nonshared.a(elf-init.oS)
- .debug_ranges  0x00000000000002a0       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
+ .debug_ranges  0x0000000000000040       0x50 /usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_ranges  0x0000000000000090       0x40 /usr/lib64/gcc/x86_64-suse-linux/4.8/../../../../lib64/crtn.o
 
 .debug_macro
  *(.debug_macro)

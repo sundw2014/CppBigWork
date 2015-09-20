@@ -26,8 +26,8 @@ bool Client::updateFrame()
     sleep(1);
     if(protocol.receiveFrame())
     {
-        return true;
         parseFrame();
+        return true;
     }
   }
   return false;

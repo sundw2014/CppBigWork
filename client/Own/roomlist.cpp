@@ -6,6 +6,7 @@
 #include "own1.h"
 #include "unistd.h"
 #include"stdio.h"
+#include "qthread.h"
 
 RoomList::RoomList(Client &mclient,RoomTableInfo &list,QWidget *parent) :
     QDialog(parent),
@@ -37,7 +38,7 @@ void RoomList::on_tableWidget_itemClicked(QTableWidgetItem *item)
     unsigned char tempLen[4] = {6,1,0,0};
     printf("%d,%d\r\n",row,col);
     unsigned char *newINP = new unsigned char;
-    *newINP = row*16+col;
+    *newINP = row*6+col;
     client.sendFrame(tempLen,"JOININ",(char *)newINP);
     sleep(7);
     if(client.updateFrame())
@@ -46,16 +47,15 @@ void RoomList::on_tableWidget_itemClicked(QTableWidgetItem *item)
         {
             Own1 *o1 = new Own1(client,1,this);
             o1->setModal(true);
-            o1->show();
-            sleep(1);
-            o1->gameControl->runOnce();
+            o1->gameControl->start();
+            o1->exec();
         }
         if(client.frame.cmd == string("OK2"))
         {
             Own1 *o1 = new Own1(client,2,this);
             o1->setModal(true);
-            o1->show();
-            sleep(1);
-            o1->gameControl->runOnce();        }
+            o1->gameControl->start();
+            o1->exec();
+        }
     }
 }

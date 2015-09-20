@@ -151,7 +151,7 @@ void *ClientProcess(void *shareClientArg)
 //	printf("locArg->fd = %d\r\n",locArg->fd);
   Client *client = new Client(locArg->fd,locArg->client_addr,locArg->client_addr_len);//当一个socket和client对象绑定之后socket回收由client析构时完成
   delete locArg;locArg=NULL;
-	sleep(1);
+	sleep(3);
   if(!client->updateFrame())
   {//死连接,线程自杀.
 		printf("OUT OF TIME\r\n");
@@ -195,20 +195,22 @@ void *ClientProcess(void *shareClientArg)
         return NULL;
       }
       // printf("wait...\r\n");
-      sleep(7);
+  //    sleep(7);
       if(client->updateFrame())//3秒
-      {  if(client->frame.cmd == string("JOININ"))
+      {
+
+          printf("newFrame\r\n");
+        if(client->frame.cmd == string("JOININ"))
           break;
-          // printf("newFrame\r\n");
-          // cout<<client->frame.cmd<<endl;
+          cout<<client->frame.cmd<<endl;
       }
       times++;
     }
-    printf("roomNo = %d\r\n",*(unsigned char *)(client->receivedFrame->value1));
-    if(hall.joinRoom(*(unsigned char *)(client->receivedFrame->value1),*client))
+    // printf("roomNo = %d\r\n",*(unsigned char *)(client->receivedFrame->value1));
 
-    sleep(1);//等待房间新建了完成
+    hall.joinRoom(*(unsigned char *)(client->receivedFrame->value1),*client);
     // printf("ok0\r\n");
+    // printf("roomNo = %d\r\n",*(unsigned char *)(client->receivedFrame->value1));
     Room *tempRoom = hall.getRoom(*(unsigned char *)(client->receivedFrame->value1));
     if(tempRoom == NULL)
     {
@@ -217,13 +219,13 @@ void *ClientProcess(void *shareClientArg)
     }
     unsigned char num = tempRoom->GetNumOfClients();
     // printf("num = %d\r\n",num);
-    if(num == 0)
+    if(num == 1)
     {
       printf("ok1\r\n");
       unsigned char temp[4]={3,0,0,0};
       client->sendFrame(temp,"OK1");
     }
-    else if(num == 1)
+    else if(num == 2)
     {
       printf("ok2\r\n");
       unsigned char temp[4]={3,0,0,0};
@@ -269,11 +271,11 @@ if(client->frame.cmd==string("SIGNUP"))
 
 void *gameRunning(void *Arg)
 {
-
+    sleep(3);
     //子线程分离
     pthread_detach(pthread_self());
-  	printf("new Thread %x\r\n",pthread_self());
-    printf("roomTable[roomNo] = %x\r\n",((GameArg *)Arg)->room);
+  	printf("gameRunning new Thread %x\r\n",pthread_self());
+    //printf("roomTable[roomNo] = %x\r\n",((GameArg *)Arg)->room);
 		unsigned char result = ((GameArg *)Arg)->room->GameControl();
     delete (GameArg *)Arg;
 

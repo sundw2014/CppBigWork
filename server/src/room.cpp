@@ -28,15 +28,17 @@ int Room::addClient(Client &newClient)
     return -1;
   if(client[0]==NULL)
   {
-    printf("&client start\r\n");
+    // printf("&client start\r\n");
     client[0]=&newClient;
-    printf("client[0] = %x\r\n",client[0]);
+    numOfClients = 1;
+    // printf("client[0] = %x\r\n",client[0]);
   }
   else if(client[1]==NULL)
   {
-    printf("&client start\r\n");
+    // printf("&client start\r\n");
     client[1]=&newClient;
-    printf("client[1] = %x\r\n",client[1]);
+    numOfClients = 2;
+    // printf("client[1] = %x\r\n",client[1]);
   }
   return 0;
 }
@@ -49,22 +51,23 @@ bool Room::isFull()
 
 unsigned char Room::GameControl()
 {
-    printf("GameControl in\r\n");
-    printf("clientPointer = %x\n\r",client[0]);
+    //printf("GameControl in\r\n");
+    //printf("clientPointer = %x\n\r",client[0]);
     client[0]->getClientInfoDB();
 
-    printf("updateDB1 ok\r\n");
+    //printf("updateDB1 ok\r\n");
     client[1]->getClientInfoDB();
-    printf("updateDB2 ok\r\n");
+    //printf("updateDB2 ok\r\n");
     unsigned char temp[4] = {5,0,0,0};
     client[0]->sendFrame(temp,"START");
     client[1]->sendFrame(temp,"START");
-    printf("sendFrame ok\r\n");
+    printf("send start ok\r\n");
     while(1)
     {
         unsigned short times = 0;
         while(1)
         {
+          sleep(5);
           times++;
           if(client[turn]->updateFrame())
           {

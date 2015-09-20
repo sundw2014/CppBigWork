@@ -48,6 +48,7 @@ void Own1::paintEvent(QPaintEvent *)
         {
             if (a[i][j] == 1)
             {
+//                printf("black\r\n");
                 brush.setColor(Qt::black);
                 d.setBrush(brush);
                 d.drawEllipse(QPoint((i + 1) * 40, (j + 1) * 40), 15, 15);
@@ -76,6 +77,8 @@ void Own1::mouseReleaseEvent(QMouseEvent *e)
             if (!a[x][y])
             {
                 a[x][y] = _myTurn;
+                repaint();
+                update();
                 file[player].inisave(x , y);
                 QSound::play("D://1.wav");
                 unsigned char tempLen[4] = {6,1,0,0};

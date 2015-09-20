@@ -30,6 +30,7 @@ public:
             a[inp/16][inp%16] = turn;
         else
             return false;
+        update();
         return true;
     }
 private slots:

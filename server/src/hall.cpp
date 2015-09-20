@@ -25,6 +25,8 @@ int Hall::createNewRoom(unsigned int roomNo)
 
 int Hall::joinRoom(unsigned int roomNo,Client &client)
 {
+  if(roomNo>=ROOMMAX)
+    return -1;
   if(roomTable[roomNo]==NULL)//还没有这个房间,新建一个
     if(createNewRoom(roomNo) != 0)
       return -1;
@@ -40,8 +42,8 @@ int Hall::joinRoom(unsigned int roomNo,Client &client)
         pthread_t tid;
 
         GameArg *tempArg = new GameArg{roomTable[roomNo]};
-        printf("roomTable[roomNo] = %x\r\n",roomTable[roomNo]);
-        printf("roomTable[roomNo] = %x\r\n",tempArg->room);
+        // printf("roomTable[roomNo] = %x\r\n",roomTable[roomNo]);
+        // printf("roomTable[roomNo] = %x\r\n",tempArg->room);
         pthread_create(&tid , NULL , gameRunning , tempArg);
   }
   return 0;

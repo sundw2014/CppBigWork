@@ -35,8 +35,8 @@ bool Client::updateFrame()
     sleep(1);
     if(protocol.receiveFrame())
     {
-        return true;
         parseFrame();
+        return true;
     }
   }
   return false;
@@ -46,11 +46,14 @@ bool Client::parseFrame()
 {
   // printf("length = {%d,%d,%d,%d}\r\n",protocol.receivedFrame.length[0],protocol.receivedFrame.length[1],protocol.receivedFrame.length[2],protocol.receivedFrame.length[3]);
   // printf("frameCmd = %s   ,length = %d\r\n",protocol.receivedFrame.cmd,(size_t)protocol.receivedFrame.length[0]);
+  // printf("TESTK1\r\n");
+  // frame.cmd=string("TESTK");
+  // printf("TESTK2\r\n");
   frame.cmd=string(protocol.receivedFrame.cmd,(size_t)protocol.receivedFrame.length[0]);
-  // printf("frame.cmd = %s",frame.cmd.c_str());
   frame.value1=string(protocol.receivedFrame.value1,(size_t)protocol.receivedFrame.length[1]);
   frame.value2=string(protocol.receivedFrame.value2,(size_t)protocol.receivedFrame.length[2]);
   frame.value3=string(protocol.receivedFrame.value3,(size_t)protocol.receivedFrame.length[3]);
+  // printf("frame.cmd = %s\r\n",frame.cmd.c_str());
   return true;//备用返回值
 }
 
@@ -68,7 +71,7 @@ bool Client::sendFrame(const Frame* frame)
 
 unsigned char Client::clientUpdateDB()
 {
-  printf("in updateDB");
+  printf("in updateDB\r\n");
   MYSQL mysql;
   string query;
   MYSQL_RES *result;
@@ -82,9 +85,9 @@ unsigned char Client::clientUpdateDB()
 
   std::string strScore;
   stringstream converter;
-//  converter<<score;
+  converter<<score;
 
-  query="update user set score=" +   converter.str() + " where username='" + userName + "'";
+  query="update user set score=" +  converter.str() + " where username='" + userName + "'";
   cout<<query<<endl;
   do
   {

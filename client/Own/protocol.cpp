@@ -16,7 +16,7 @@ Protocol::Protocol(int Protocol_fd)
   //initiate the variables
   memset(&receivedFrame,0,sizeof(Frame));
   memset(&sendingFrame,0,sizeof(Frame));
-
+  pointer = (char *)&receivedFrame;
   fcntl(fd , F_SETFL , O_NONBLOCK);
   FD_ZERO(&fds);
   FD_SET(fd , &fds);
@@ -25,8 +25,6 @@ Protocol::Protocol(int Protocol_fd)
 
 bool Protocol::receiveFrame()
 {
-  char tempCh=NULL;
-  char *tempP=(char *)&receivedFrame;
   //printf("select\r\n");
 //  if (1){
 	  //select(fd+1 , &fds , NULL , NULL ,&tv)>0) {
@@ -37,12 +35,17 @@ bool Protocol::receiveFrame()
 //    //while(1);
 //    }
 //  return isFrameValid(receivedFrame);
-  int n = recv(fd, tempP , sizeof(receivedFrame) , 0);
+  int n = recv(fd, pointer , sizeof(receivedFrame) + (char *)&receivedFrame - pointer , 0);
+  if(n>0)
+    pointer += n;
   // for(int i=0;i<n;i++)
   //   printf("%c",*tempP++);
   // printf("n = %d,sizeof(receivedFrame) = %d\r\n",n,sizeof(receivedFrame));
-  if(n==sizeof(receivedFrame))
-    return isFrameValid(receivedFrame);
+  if(pointer==(sizeof(receivedFrame) + (char *)&receivedFrame))
+  {
+       pointer = (char *)&receivedFrame;
+       return isFrameValid(receivedFrame);
+  }
   return false;
 }
 
