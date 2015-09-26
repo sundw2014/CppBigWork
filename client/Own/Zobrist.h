@@ -1,4 +1,4 @@
-#include "mType.h"
+﻿#include "mType.h"
 #define ZobrisrtInitValue 0x4E53A23F
 extern const uint32 ZobristTable[256][3];
 

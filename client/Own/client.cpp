@@ -1,6 +1,8 @@
-#include "client.hpp"
+﻿#include "client.hpp"
 #include "protocol.hpp"
-#include "unistd.h"
+#include "windows.h"
+#include "stdio.h"
+
 using namespace std;
 
 Client::Client(int fd):socketFd(fd),protocol(fd)
@@ -10,7 +12,7 @@ Client::Client(int fd):socketFd(fd),protocol(fd)
 
 Client::~Client()
 {
-  close(socketFd);
+  closesocket(socketFd);
 }
 
 bool Client::updateFrame()
@@ -23,11 +25,11 @@ bool Client::updateFrame()
   }
   for(unsigned i=0;i<2;i++)
   {
-    sleep(1);
+    Sleep(1000);
     if(protocol.receiveFrame())
     {
-        return true;
         parseFrame();
+        return true;
     }
   }
   return false;
@@ -45,4 +47,5 @@ bool Client::parseFrame()
 bool Client::sendFrame(const unsigned char lengths[],const char *cmd ,const char *value1,const char *value2,const char *value3)
 {
   protocol.sendFrame(lengths,cmd,value1,value2,value3);
+  return true;
 }

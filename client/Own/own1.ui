@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>640</height>
+    <width>880</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,18 +26,16 @@
     <string>回放</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>700</x>
-     <y>170</y>
-     <width>131</width>
-     <height>51</height>
+     <x>150</x>
+     <y>190</y>
+     <width>160</width>
+     <height>80</height>
     </rect>
    </property>
-   <property name="text">
-    <string>悔棋</string>
-   </property>
+   <layout class="QFormLayout" name="formLayout"/>
   </widget>
  </widget>
  <resources/>

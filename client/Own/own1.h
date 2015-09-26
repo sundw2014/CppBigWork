@@ -24,14 +24,8 @@ public:
     int myTurn(){return _myTurn;}
     StateMachine *gameControl;
     int Win(int, int);
-    bool inp(uint8 inp,uint8 turn)
-    {
-        if(a[inp/16][inp%16]==0)
-            a[inp/16][inp%16] = turn;
-        else
-            return false;
-        return true;
-    }
+    bool inp(uint8 inp,uint8 turn);
+
 private slots:
     void on_pushButton_clicked();
 
@@ -40,7 +34,7 @@ private slots:
 private:
     Ui::Own1 *ui;
     int a[16][16];
-    int review = 0;
+    int review;
     int win1(int, int);
     int win2(int, int);
     int win3(int, int);
@@ -48,7 +42,7 @@ private:
     int player;
     int users;
     int _myTurn;
-    bool check = true;
+    bool check;
     Client &client;
 };
 

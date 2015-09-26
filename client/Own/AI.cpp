@@ -1,24 +1,43 @@
-#include "AI.h"
+﻿#include "AI.h"
 #include<algorithm>
 #include "mType.h"
 #include "time.h"
-#include <pthread.h>
-#include <unistd.h>
+#include "windows.h"
 #include "stdio.h"
+#include "mythread.h"
+#include "tchar.h"
+#include <QtCore>
+#include <QtCore/QMutex>
 
-uint32 hash = ZobrisrtInitValue;
+uint32 ChessBoard::realHash;
+uint8 ChessBoard::realPly;
 //记录当前实际的层数，游戏之初设为0
-//偶数层为白子max,1
-uint8 realPly = 0;
+//偶数层为黑子max,1
 //最大搜索深度
-const uint8 maxDepth = 3;
-const uint8 maxThreads = 12;
+uint8 maxDepth = 3;
+const uint8 maxThreads = 8;
 int numProcessors = 1;//cpu核心数
- std::vector<ZobristNode> *volatile hashValues[maxDepth+1];
-pthread_mutex_t hashMymutex[maxDepth+1] = PTHREAD_MUTEX_INITIALIZER;
 //互斥信号量定义成volatile,防缓存
-volatile bool hashValuesLock[maxDepth+1],isThreadEnd[maxThreads],isTidRunning[maxThreads],isTidJoin[maxThreads];
-pthread_t tid[maxThreads];
+volatile bool isThreadEnd[maxThreads],isTidRunning[maxThreads],isTidJoin[maxThreads];
+AIThread *thread[maxThreads];
+
+typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
+DWORD GetNumberOfProcessors()
+{
+    SYSTEM_INFO si;
+
+    // Call GetNativeSystemInfo if supported or GetSystemInfo otherwise.
+    PGNSI pfnGNSI = (PGNSI) GetProcAddress(GetModuleHandleA("kernel32.dll"), "GetNativeSystemInfo");
+    if(pfnGNSI)
+    {
+        pfnGNSI(&si);
+    }
+    else
+    {
+        GetSystemInfo(&si);
+    }
+    return si.dwNumberOfProcessors;
+}
 
 uint8 getPosValue(const BitBoard &board,uint8 pos)
 {
@@ -194,8 +213,11 @@ bool isWin(const BitBoard &board,const BitBoard &otherBoard,uint8 inp)
       return false;
 }
 
+std::vector<ZobristNode> *volatile * ChessBoard::hashValues;
+QMutex * ChessBoard::hashMutex;
+
 //由int数组生成AI中使用的位棋盘
-ChessBoard::ChessBoard(int a[16][16],uint32 hash){
+ChessBoard::ChessBoard(int a[16][16],uint8 inp){
     for(unsigned char i=0;i<BOARDSIZE;i++)
         for(unsigned char j=0;j<BOARDSIZE;j++){
                 uint8 block = ((i*16+j)/8);
@@ -208,7 +230,8 @@ ChessBoard::ChessBoard(int a[16][16],uint32 hash){
     depth=0;
     value=-10001;
     parentValue=-10001;
-    parentHash=hash;
+    realHash = ZobristHash(realHash,inp,2-(realPly%2),0);
+    parentHash=realHash;
 }
 
 //由父节点生成棋盘时所需要的构造
@@ -222,6 +245,7 @@ ChessBoard::ChessBoard(const ChessBoard &parent,uint8 inp,uint32 oldHash){
     black=parent.black;
     value = -10001;
     parentValue = -parent.value;
+    win = false;
     if(((realPly+depth)%2) != 0)//白子节点
     {
       if(isWin(black,white,inp))
@@ -254,19 +278,19 @@ int16 ChessBoard::run(){
        hash = ZobristHash(parentHash,input,2,0);
     if(depth == maxDepth)//已到达最大深度
     {
-        usleep(10);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
+        Sleep(1);//线程挂起1000微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
         ZobristNode temp = {hash,0};
         bool isExist = false;
         std::vector<ZobristNode>::iterator k;
         ZobristNode h;
 //        while(hashValuesLock[depth]);
 //        hashValuesLock[depth] = true;
-        pthread_mutex_lock(&hashMymutex[depth]);
+        hashMutex[depth].lock();
         if((k=std::find(hashValues[depth]->begin(),hashValues[depth]->end(),temp))!=hashValues[depth]->end())
             isExist = true;
         if(isExist)
             h = *k;
-        pthread_mutex_unlock(&hashMymutex[depth]);
+        hashMutex[depth].unlock();
 //        hashValuesLock[depth] = false;
         if(!isExist){
           //尚未评估过该点，则使用蒙特卡洛方法评估
@@ -278,10 +302,10 @@ int16 ChessBoard::run(){
           //以下两行对应P操作
 //          while(hashValuesLock[depth]);//其他线程正在操作，阻塞
 //          hashValuesLock[depth] = true;//对信号量执行-1操作哈
-          pthread_mutex_lock(&hashMymutex[depth]);
+          hashMutex[depth].lock();
           hashValues[depth]->push_back(h);
           //等效的V操作
-          pthread_mutex_unlock(&hashMymutex[depth]);
+          hashMutex[depth].unlock();
 //          hashValuesLock[depth] = false;
 
           if (h.value > parentValue)
@@ -297,7 +321,7 @@ int16 ChessBoard::run(){
     }
     else if(depth!=0) //尚未到达最大深度
     {
-        usleep(10);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
+        Sleep(1);//线程挂起10微秒让根节点运行一下回收资源并分配新线程任务,解决方案略low ^_^!!!
         ZobristNode temp = {hash,0};
         bool isExist = false;
         std::vector<ZobristNode>::iterator k;
@@ -363,9 +387,9 @@ int16 ChessBoard::run(){
           h.hash = hash;
 //          while(hashValuesLock[depth]);
 //          hashValuesLock[depth] = true;
-          pthread_mutex_lock(&hashMymutex[depth]);
+          hashMutex[depth].lock();
           hashValues[depth]->push_back(h);
-          pthread_mutex_unlock(&hashMymutex[depth]);
+          hashMutex[depth].unlock();
 //          hashValuesLock[depth] = false;
           return(-h.value);
         }
@@ -380,13 +404,14 @@ int16 ChessBoard::run(){
     }
       else if(depth == 0)
       {
+        SetThreadAffinityMask(((::HANDLE)QThread::currentThreadId()), 0);
         //初始化信号量和线程状态表
         for(uint8 p=0;p<maxThreads;p++)
         {
-            hashValuesLock[p] = false;
             isTidJoin[p] = false;
         }
         hash = parentHash;
+        printf("init OK\r\n");
         int16 bestStep;
         //此段完成上面指针所指的内存实际分配，应该放在系统ai根节点开始阶段
         for(uint8 cnt=1;cnt<maxDepth-1;cnt++)
@@ -405,8 +430,12 @@ int16 ChessBoard::run(){
             for(uint8 j=0;j<8;j++)
               if((invalidPos[i] >> j) & 1)
                   validCap--;
-          uint8 validCapMin = validCap * 3/4;
-          printf("validCap=%d\r\n",validCap);
+          uint8 validCapMin;
+          if(maxDepth<3)
+              validCapMin = 1;
+          else
+              validCapMin = validCap * 9/10;
+          printf("validCapMin=%d\r\n",validCapMin);
         //评估每个可以着子的点,直到所有点评估完成,根节点需要返回最佳输入值,且增加对多线程的支持
           //建立新线程
           for(uint8 q=0;q<maxThreads;q++)
@@ -414,27 +443,36 @@ int16 ChessBoard::run(){
 //              sleep(1);//等待线程读取inp到本地栈
               uint8 inp = getValidPos(invalidPos);
               invalidPos[inp/8] |= (1<<(inp%8));
-              ThreadArgs tempA = {this,inp,q};
+              ThreadArgs tempA = {this,inp,q,realHash};
               validCap--;
-              isTidRunning[q] = true;
-              pthread_create(&(tid[q]) , NULL , SearchThe , &tempA);
-              usleep(10);
+              thread[q] = new AIThread(tempA);
+              thread[q] -> start();
+              //thread_create(&(tid[q]) , NULL , SearchThe , &tempA);
+//              Sleep(10);
           }
           while(1)
           {
             if(validCap < validCapMin)
             {
-              for(pthread_t q=0;q<maxThreads;q++)
+              for(unsigned q=0;q<maxThreads;q++)
               {
                 if(!isTidJoin[q])
                 {
                   //回收资源
-                  void *tempP;
                   //阻塞
-                  pthread_join(tid[q],&tempP);
-                  int16 tempV = ((ThreadReturn *)tempP)->value;
-                  int16 tempInp = ((ThreadReturn *)tempP)->inp;
-                  delete tempP;
+                  while(!thread[q]->stop)
+                  {
+                      //printf("wait1...\r\n");
+                      Sleep(1000);}
+                  while(thread[q]->isRunning())
+                  {
+                      //printf("wait2...\r\n");
+                      Sleep(1000);}
+//                  pthread_join(tid[q],&tempP);
+                  int16 tempV = thread[q]->result.value;
+                  int16 tempInp = thread[q]->result.inp;
+                  delete thread[q];
+
                   if(isValueValid(tempV))//若无效说明这个枝被cutoff，不处理
                       if(value < tempV)//如果大于当前估计值则更新，其实没必要检测，只要有效就说明字节点已经检测通过
                       {
@@ -447,14 +485,15 @@ int16 ChessBoard::run(){
             }
             for(uint8 q=0;q<maxThreads;q++)
             {
-              if(!isTidRunning[q])
+              if(thread[q]->stop)
               {
                 //回收资源
-                void *tempP;
-                pthread_join(tid[q],&tempP);
-                int16 tempV = ((ThreadReturn *)tempP)->value;
-                int16 tempInp = ((ThreadReturn *)tempP)->inp;
-                delete tempP;
+//                pthread_join(tid[q],&tempP);
+                while(thread[q]->isRunning());
+                int16 tempV = thread[q]->result.value;
+                int16 tempInp = thread[q]->result.inp;
+                delete thread[q];
+
                 if(isValueValid(tempV))//若无效说明这个枝被cutoff，不处理
                     if(value < tempV)//如果大于当前估计值则更新，其实没必要检测，只要有效就说明字节点已经检测通过
                     {
@@ -465,11 +504,13 @@ int16 ChessBoard::run(){
                 {
                   uint8 inp = getValidPos(invalidPos);
                   invalidPos[inp/8] |= (1<<(inp%8));
-                  ThreadArgs tempA = {this,inp,q};
+                  ThreadArgs tempA = {this,inp,q,realHash};
                   validCap--;
-                  isTidRunning[q] = true;
-                  pthread_create(&(tid[q]) , NULL , SearchThe , &tempA);
-                  usleep(10);//等待线程读取inp到本地栈
+//                  isTidRunning[q] = true;
+//                  pthread_create(&(tid[q]) , NULL , SearchThe , &tempA);
+                  thread[q] = new AIThread(tempA);
+                  thread[q]->start();
+//                  Sleep(1);//等待线程读取inp到本地栈
                 }
                 else
                 {
@@ -484,6 +525,8 @@ int16 ChessBoard::run(){
         /////////////////////////////////////////////////////////
         delete hashValues[1],hashValues[2];
         printf("bestStep=%d\r\n",bestStep);
+        realPly += 2;
+        realHash = ZobristHash(realHash,bestStep,(realPly%2)+1,0);
         return bestStep;
     }
 }
@@ -497,7 +540,7 @@ int16 ChessBoard::run(){
 int16 ChessBoard::MC(){
 //MC函数可以获得到this对象的黑白棋盘情况，需要拷贝一份到栈空间，进行对弈模拟
 
-    int16 whiteResult = 0,blackResult = 0;
+//    int16 whiteResult = 0,blackResult = 0;
     int16 result=0;
     bool isWhiteWin=false,isBlackWin=false;
 
@@ -588,30 +631,32 @@ int16 ChessBoard::MC(){
   }
 }
 
-//线程例程
-static void *SearchThe(void *args)
+void ChessBoard::AIInit(uint8 turn,uint8 level)
 {
-
-//  printf("thread:%d\r\n",pthread_self());
-  ThreadArgs mArgs = *((ThreadArgs *)args);
-
-  //绑定核心
-  cpu_set_t mask;
-  CPU_ZERO(&mask);
-  CPU_SET(mArgs.qtid % numProcessors , &mask);
-  if(sched_setaffinity(0, sizeof(mask), &mask) == -1) //0 代表对当前线程
-  {
-      printf("set affinity failed..");
-  }
-//  printf("q = %d\r\n",mArgs.qtid);
-  ////sleep(rand()%25);
-  printf("q = %d start\r\n",mArgs.qtid);
-  ChessBoard *newNode = new ChessBoard(*(mArgs.parent),mArgs.inp,hash);
-  ThreadReturn *temp = new ThreadReturn;
-  temp->value = newNode->run();
-  temp->inp = mArgs.inp;
-  delete newNode;
-//  printf("q = %d finished\r\n",mArgs.qtid);
-  isTidRunning[mArgs.qtid] = false;
-  return temp;
+    if(level<1) maxDepth = 1;
+    if(level>3) maxDepth = 3;
+    else maxDepth = level;
+    hashValues =new std::vector<ZobristNode> *volatile[maxDepth+1];
+    hashMutex = new QMutex[maxDepth+1];
+    realPly = turn - 1;
+    realHash = ZobrisrtInitValue;
+    numProcessors = GetNumberOfProcessors();
+    if(turn == 1)
+    {
+        realPly += 2;
+        realHash = ZobristHash(realHash,8*16+8,1,0);
+    }
+    printf("maxDepth = %d\r\n",maxDepth);
 }
+
+void ChessBoard::AIBackOnce()
+{
+    realPly -= 2;
+}
+
+////线程例程
+//static void *SearchThe(void *args)
+//{
+
+
+//}

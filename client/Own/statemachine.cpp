@@ -1,7 +1,14 @@
-#include "statemachine.h"
+﻿#include "statemachine.h"
 #include "client.hpp"
 #include <QtWidgets>
 
+StateMachine::StateMachine(Own1 &mgame,Client &mclient,QObject *parent):
+    QThread(parent),
+    game(mgame),
+    client(mclient)
+{}
+StateMachine::~StateMachine()
+{}
 STATE StateMachine::runOnce()
 {
     switch (state)
@@ -31,7 +38,7 @@ STATE StateMachine::runOnce()
                      if(client.frame.cmd == std::string("NEWINP"))
                      {
                          uint8 inp =  *(unsigned char *)(client.receivedFrame->value1);
-                         if(game.inp(inp,game.myTurn()))
+                         if(game.inp(inp,3-game.myTurn()))
                          {}
                          else
                          {}
@@ -40,8 +47,8 @@ STATE StateMachine::runOnce()
                              unsigned char tempLen[4] = {5,0,0,0};
 
                              client.sendFrame(tempLen,"ILOSE");
-                             QMessageBox::information(0, "lose", "YOU LOSE", QMessageBox::Ok);
-                             state = OVER;
+                             //QMessageBox::information((QDialog *)parent(), "lose", "YOU LOSE", QMessageBox::Ok);
+                             state = LOSE;
                              break;
                          }
                          state = YOURTURN;
@@ -50,5 +57,12 @@ STATE StateMachine::runOnce()
             }
             break;
         }
+        case OVER:
+            break;
+        case LOSE:
+            break;
+        defalut:
+            break;
     }
+    return state;
 }

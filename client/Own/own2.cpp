@@ -3,20 +3,21 @@
 #include <QtGui>
 #include <QtWidgets>
 #include "time.h"
-#include <unistd.h>
+#include "own4.h"
+#include "windows.h"
+#include "AI.h"
+#include <QSound>
 
 Own2::Own2(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Own2)
 {
+    review = 0;
+    game = true;
     ui->setupUi(this);
     resize(880 , 680);
     memset(a, 0, 16 * 16 * sizeof(int));
-    for(uint8 i=1;i<maxDepth+1;i++)
-        hashValues[i] = new std::vector<ZobristNode>;
-    numProcessors = sysconf(_SC_NPROCESSORS_CONF); //更新cpu核心数
     player = 0;
-    QMessageBox::information(this, "Wait", "Please dicide your color(black first)", QMessageBox::Ok);
 }
 
 Own2::~Own2()
@@ -58,8 +59,7 @@ void Own2::paintEvent(QPaintEvent *)
 
 void Own2::mouseReleaseEvent(QMouseEvent *e)
 {
-    if(choose == 0) QMessageBox::information(this,"warning","You haven't set color", QMessageBox::Ok);
-    else{
+    if(game){
       int x, y;
       if(e->x() >= 20 && e->x() < 660 && e->y() >= 20 && e->y() < 660)
       {
@@ -69,7 +69,8 @@ void Own2::mouseReleaseEvent(QMouseEvent *e)
         if (!a[x][y])
         {
             a[x][y] = choose;
-            realPly++;
+            repaint();
+            QSound::play("image//1.wav");
             AI(x*16+y);
         }
         if(Win(x, y))
@@ -80,15 +81,16 @@ void Own2::mouseReleaseEvent(QMouseEvent *e)
 
             if (m==2) QMessageBox::information(this, "Win", "White Win", QMessageBox::Ok);
         }
-
+        update();
       }
     }
-    update();
+    else QMessageBox::information(this, "STOP", "this game is over", QMessageBox::Ok);
 }
 
 int Own2::Win(int x, int y)                            // 胜利条件
 {
      return win1(x, y) || win2(x, y) || win3(x, y) || win4(x ,y);
+     game = false;
 }
 
 int Own2::win1(int x, int y)
@@ -159,51 +161,27 @@ int Own2::win4(int x, int y)
     return 0;
 }
 
-void Own2::on_pushButton_clicked()
-{
-    if(choose != 0) QMessageBox::information(this,"warning","You have set color", QMessageBox::Ok);
-    else choose = 1;
-}
-
-void Own2::on_pushButton_2_clicked()
-{
-    if(choose != 0) QMessageBox::information(this,"warning","You have set color", QMessageBox::Ok);
-    else {
-      choose = 2;
-      (time(NULL)) ;//通过系统时间初始化随机数种子
-      int m = rand()%16;
-      int n = rand()%16;
-      a[m][n] = 1;
-    }
-}
-
 void Own2::AI(uint8 inp)
 {
-    hash = ZobristHash(hash,inp,choose,0);
-    ChessBoard *rootChessBoard = new ChessBoard(a,hash);
+    ChessBoard *rootChessBoard = new ChessBoard(a,inp);
     int16 output = rootChessBoard->run();
     delete rootChessBoard;
     int p = 0;
-//    while (p == 0)
-//    {
-//        (time(NULL)) ;//通过系统时间初始化随机数种子
-        int m = output / 16;
-        int n = output % 16;
-        int q = 3-choose;
 
-        if(a[m][n] == 0 )
-        {
-            a[m][n] = q;
-            p = 1;
-            if(Win(m, n))
-            {
-                update();
-                int ch = choose;
-                if (ch==2) QMessageBox::information(this, "Win", "Black Win", QMessageBox::Ok);
+    int m = output / 16;
+    int n = output % 16;
+    int q = 3-choose;
 
-                if (ch==1) QMessageBox::information(this, "Win", "White Win", QMessageBox::Ok);
-            }
-        }
-//    }
-        realPly++;
+     if(a[m][n] == 0 )
+     {
+         a[m][n] = q;
+         p = 1;
+         if(Win(m, n))
+         {
+             update();
+             int ch = choose;
+             if (ch==2) QMessageBox::information(this, "Win", "Black Win", QMessageBox::Ok);
+             if (ch==1) QMessageBox::information(this, "Win", "White Win", QMessageBox::Ok);
+         }
+      }
 }

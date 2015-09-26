@@ -1,8 +1,8 @@
 #ifndef OWN2_H
 #define OWN2_H
-#include "AI.h"
 
 #include <QDialog>
+#include "mType.h"
 
 namespace Ui {
 class Own2;
@@ -17,24 +17,22 @@ public:
     ~Own2();
     void paintEvent(QPaintEvent*);
     void mouseReleaseEvent(QMouseEvent *);
-    void AI(uint8 inp);
-
-private slots:
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
+    void AI(uint8);
+    int choose;
+    int a[16][16];
+    //void AI(uint8 inp);
 
 private:
     Ui::Own2 *ui;
-    int a[16][16];
-    int review = 0;
+
+    int review;
     int Win(int, int);
     int win1(int, int);
     int win2(int, int);
     int win3(int, int);
     int win4(int, int);
-    int choose = 0;
     int player;
+    bool game;
 };
 
 #endif // OWN2_H

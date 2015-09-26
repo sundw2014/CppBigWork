@@ -4,7 +4,7 @@
 #include <QtWidgets>
 #include <QSound>
 #include "widget.h"
-#include "unistd.h"
+#include "Windows.h"
 
 Own1::Own1(Client &mclient,int myTurn,QWidget *parent) :
     QDialog(parent),
@@ -12,6 +12,8 @@ Own1::Own1(Client &mclient,int myTurn,QWidget *parent) :
     client(mclient),
     _myTurn(myTurn)
 {
+    review = 0;
+    check = true;
     ui->setupUi(this);
     resize(880 , 680);
     memset(a, 0, 16 * 16 * sizeof(int));
@@ -73,16 +75,19 @@ void Own1::mouseReleaseEvent(QMouseEvent *e)
             x = (e->x() - 20) / 40;
             y = (e->y() - 20) / 40;
 
+
             if (!a[x][y])
             {
                 a[x][y] = _myTurn;
+                repaint();
                 file[player].inisave(x , y);
-                QSound::play("D://1.wav");
+                player +=1;
+                QSound::play("image//1.wav");
                 unsigned char tempLen[4] = {6,1,0,0};
                 unsigned char *newINP = new unsigned char;
                 *newINP = x*16+y;
                 client.sendFrame(tempLen,"NEWINP",(char *)newINP);
-                sleep(1);
+                Sleep(1000);
                 delete newINP;
                 gameControl->setState(OTHSTURN);
             }
@@ -92,8 +97,9 @@ void Own1::mouseReleaseEvent(QMouseEvent *e)
                 QMessageBox::information(this, "win", "YOU WIN", QMessageBox::Ok);
                 gameControl->setState(OVER);
             }
-            update();
-            gameControl->runOnce();
+            gameControl->start();
+            if(gameControl->getSTATE() == LOSE)
+                QMessageBox::information((QDialog *)parent(), "lose", "YOU LOSE", QMessageBox::Ok);
         }
         update();
     }
@@ -223,4 +229,16 @@ void Own1::on_pushButton_2_clicked()
     a[file[(player-2)]._x][file[(player-2)]._y] = 0;
     player = player - 2;
     update();
+}
+
+bool Own1::inp(uint8 inp,uint8 turn)
+{
+    update();
+    if(a[inp/16][inp%16]==0)
+        a[inp/16][inp%16] = turn;
+    else
+        return false;
+    file[player].inisave(inp/16,inp%16);
+    player += 1;
+    return true;
 }

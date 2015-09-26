@@ -1,4 +1,4 @@
-#ifndef ROOMLIST_H
+﻿#ifndef ROOMLIST_H
 #define ROOMLIST_H
 
 #include <QDialog>

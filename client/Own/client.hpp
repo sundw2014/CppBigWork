@@ -1,8 +1,7 @@
-#ifndef _CLIENT_H_
+﻿#ifndef _CLIENT_H_
 #define _CLIENT_H_
-#include <sys/socket.h>
+#include "WinSock2.h"
 #include "protocol.hpp"
-#include <netinet/in.h>
 
 typedef struct
 {

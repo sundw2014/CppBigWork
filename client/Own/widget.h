@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QSound>
-
+#include "own3.h"
 namespace Ui {
 class Widget;
 }
@@ -15,6 +15,8 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
+    QString str3;
+    QString thefile;
 
 private slots:
     void on_pushButton_2_clicked();
@@ -25,9 +27,25 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
+
+    void on_pushButton_8_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_9_clicked();
+
 private:
     Ui::Widget *ui;
-    bool edit = false;
+    bool edit;
+    bool showpass;
+    Own3 *own3;
+    QSound *play[3];
+    int music_num;
+    bool play_now;
 };
 
 #endif // WIDGET_H

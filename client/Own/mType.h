@@ -1,4 +1,4 @@
-#ifndef _MTYPE_H_
+﻿#ifndef _MTYPE_H_
 #define _MTYPE_H_
 #include "memory.h"
 
@@ -48,20 +48,21 @@ public:
   }
   uint8 &operator [](uint8 index)
   {
-    if ((index >= SIZE) or (index < 0))
+    if ((index >= SIZE) || (index < 0))
         return board[0];//此处返回什么?
     return board[index];
   }
   const uint8 &operator [](uint8 index) const
   {
-    if ((index >= SIZE) or (index < 0))
+    if ((index >= SIZE) || (index < 0))
         return board[0];//此处返回什么?
     return board[index];
   }
-  BitBoard operator =(const struct BitBoard &rhs)
+  BitBoard &operator =(const struct BitBoard &rhs)
   {
       for(uint8 i=0;i<SIZE;i++)
           board[i]=rhs[i];
+      return *this;
   }
 #undef SIZE
 };
@@ -77,6 +78,7 @@ typedef struct
     const ChessBoard *parent;
     uint8 inp;
     uint8 qtid;
+    uint32 hash;
 }ThreadArgs;
 
 #endif

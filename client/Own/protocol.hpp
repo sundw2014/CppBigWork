@@ -1,4 +1,4 @@
-#ifndef _PROTOCOL_H_
+﻿#ifndef _PROTOCOL_H_
 #define _PROTOCOL_H_
 
 #include <string>
@@ -9,9 +9,10 @@
 #include<string.h>
 #include<errno.h>
 #include<sys/types.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
-#include<arpa/inet.h>
+//#include<sys/socket.h>
+//#include<netinet/in.h>
+//#include<arpa/inet.h>
+#include "WinSock2.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ private:
 	fd_set fds;
 	struct timeval tv;
 
+    char *pointer;
 	Frame sendingFrame;                           //the frame of the protocol
 	void sendFrameReal();                       //send the frame prototype
 

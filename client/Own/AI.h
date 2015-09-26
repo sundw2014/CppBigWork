@@ -1,13 +1,14 @@
-#ifndef _AI_H_
+﻿#ifndef _AI_H_
 #define _AI_H_
 
 #include "Zobrist.h"
 #include "mType.h"
 #include "memory.h"
 #include "vector"
+#include <QtCore/QMutex>
 
 #define BOARDSIZE 16
-extern const uint8 maxDepth;
+extern uint8 maxDepth;
 extern uint32 hash;
 extern uint8 realPly;
 extern std::vector<ZobristNode> *volatile hashValues[];
@@ -23,24 +24,30 @@ private:
   uint8 depth,input;
   //父节点的hash值主要用于生成当前节点的hash
   uint32 parentHash;
-
-  bool win=false;
+  bool win;
+  static std::vector<ZobristNode> *volatile *hashValues;
+  static QMutex *hashMutex;
 public:
+  static uint8 realPly;
+  static uint32 realHash;
   //返回该节点第i行，第j列的棋子，返回0,1,2，含义与ui相同
   uint8 operator ()(uint8 i,uint8 j);
   //这个构造是为了从ui中的棋盘类型生成ai中的位棋盘,在ui中调用
-  ChessBoard(int a[16][16],uint32 hash);
+  ChessBoard(int a[16][16],uint8 hash);
   //传入父节点的估计值,父节点的深度,输入（即着子点),父节点的hash
   ChessBoard(const ChessBoard &parent,uint8 inp,uint32 oldHash);
 
   //~ChessBoard();
 
   //hash的计算,传入旧hash值，改变的位置，该位置的新值,旧值(0,1,2)
-  uint32 ZobristHash(uint32 oldHash,uint8 pos , uint8 newState , uint8 oldState){
+  static uint32 ZobristHash(uint32 oldHash,uint8 pos , uint8 newState , uint8 oldState){
       //根据增量算出hash
       return (oldHash ^ (uint32)ZobristTable[pos][newState] ^ (uint32)ZobristTable[pos][oldState]);
   }
 
+  static void AIInit(uint8 turn,uint8 level);
+
+  static void AIBackOnce();
   //判断收益是否为有效值
   static bool isValueValid(int16 value){
     return ((-1001 < value) && (value < 1001))?true:false;
